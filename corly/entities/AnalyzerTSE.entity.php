@@ -11,7 +11,7 @@
 class AnalyzerTSE
 {
     private $Id;
-    private $Submission;
+    public $Submission;
     private $Analyzer;
     private $Result;
     

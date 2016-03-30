@@ -6,7 +6,7 @@
 
 class Library	{
     //Database version
-    const DB_VERSION = 7;
+    const DB_VERSION = 9;
 	// Folder constants
 	// - utilities
 	const UTILITIES = "utilities";

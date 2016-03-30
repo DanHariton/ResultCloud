@@ -10,20 +10,21 @@ Library::using(Library::UTILITIES);
  * @version 1.0
  * @author Bohdan Iakymets
  */
-class UpdatePatch_8
+class UpdatePatch_9
 {
     public $Database;
 
     public function Update()
     {
         $driver = new UpdateDriver();
-        $tTemplateSettings = new DbTable('TemplateSettings');
+        $tTemplateSettings = new DbTable('User');
 
-        // Set Extention property
-        $pExtention = new DbProperty('Extention');
-        $pExtention->SetType(DbType::Varchar(255));
-        // Add Extention to table
-        $tTemplateSettings->AddProperty($pExtention);
+       // Set email property
+        $pEmail = new DbProperty('Email');
+        $pEmail->SetType(DbType::Varchar(127));
+        $pEmail->NotNull();
+        // Add Email to table
+        $tUser->AddProperty($pEmail);
 
         $validation = $driver->Update(UpdateDriver::ADD_TO_TABLE, $tTemplateSettings);
 

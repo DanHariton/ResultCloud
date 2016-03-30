@@ -88,12 +88,17 @@ class ImportService
         $privateNotifiers = NotificationController::getPrivateNotifiers();
 
         $to = array();
-        if (SessionService::IsSessionSet('id')) {
-            foreach ($privateNotifiers as $value) {
-                $settings = $settingsService->GetByIdentifier($value, null, SessionService::GetSession('id'));
-                if ($settings->IsValid) {
-                    if ($settings->Data['get-notify'] == "1") {
-                        $to[$value] = array("cyberbond95@gmail.com");
+        $users = FactoryService::UserService()->GetList();
+        foreach ($privateNotifiers as $value) {
+            $to[$value] = array();
+        }
+        foreach ($users->ToList() as $user) {
+            $settings = $settingsService->GetByIdentifier($value, null, $user->Id);
+            error_log($settings->IsValid);
+            if ($settings->IsValid) {
+                if ($settings->Data['get-notify'] == "1") {
+                    foreach ($privateNotifiers as $value) {
+                        $to[$value][] = $user->Email;
                     }
                 }
             }

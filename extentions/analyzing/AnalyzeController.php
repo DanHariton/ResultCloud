@@ -28,12 +28,23 @@ class AnalyzeController
     {
         // var_dump(self::$AnalyzerList);
         if (self::$AnalyzerList[$analyzerId]) {
-            error_log("Workkkk");
             $a = self::$AnalyzerList[$analyzerId];
             $analyzer = new $a();
             return $analyzer->Visualize(FactoryService::AnalyzerService()->LoadResultsByAnalyzer($analyzerId));
         }
         return array();
+    }
+
+    static public function VisualizeBySubmission($submissionId)
+    {
+        $result = array();
+        foreach (self::$AnalyzerList as $analyzerId => $a) {
+        
+            $analyzer = new $a();
+            $analyzer_results = FactoryService::AnalyzerService()->LoadResultsByAnalyzer($analyzerId)->Where("Submission", LINQ::IS_EQUAL, $submissionId);
+            $result[$analyzerId] = $analyzer->VisualizeSingle($analyzer_results->Last());
+        }
+        return $result;
     }
 
     static public function InitAnalyzers()

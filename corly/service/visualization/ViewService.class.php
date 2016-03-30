@@ -102,6 +102,10 @@ class ViewService
                 $data->ProjectTSE = FactoryService::ProjectService()->LoadTSE($request->Source);
                 $data->ProjectTSE->SetPlugin(FactoryService::PluginService()->LoadTSE($data->ProjectTSE->GetPlugin()));
                 break;
+            case ViewType::ANALYZE:
+                // Load data
+                 $data->Submission = $request->Source->Submission;
+                break;
             default:
                 $validation->AddError('Invalid view type');
                 return $validation;

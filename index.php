@@ -42,6 +42,7 @@ Library::using(Library::UTILITIES, ['DatabaseDriver.php']);
     <script src="js/controllers/ProjectSettingsController.js" type="text/javascript"></script>
     <script src="js/controllers/ProjectDashboardController.js" type="text/javascript"></script>
     <script src="js/controllers/ReleaseNotesController.js" type="text/javascript"></script>
+    <script src="js/controllers/AnalyzeController.js" type="text/javascript"></script>
 
     <!-- Visualization directives -->
     <script src="visualization/loaders/DynamicComponentSettingsLoader.js" type="text/javascript"></script>

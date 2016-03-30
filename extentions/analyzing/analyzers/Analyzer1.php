@@ -66,4 +66,13 @@ class Analyzer1
         }
         return $visualize;
     } 
+
+    public function VisualizeSingle($data)
+    {
+        $visualize = null;
+        if ($data) {
+            $visualize = json_decode($data->GetResult());
+        }
+        return $visualize;
+    } 
 }

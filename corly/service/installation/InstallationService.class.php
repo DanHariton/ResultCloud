@@ -131,6 +131,7 @@ class InstallationService
         
         // Validate
         $validation->CheckNotNullOrEmpty('Username', 'Username is required');
+        $validation->CheckNotNullOrEmpty('Email', 'Email is required');
         $validation->CheckNotNullOrEmpty('Password', 'Password is required');
         $validation->CheckNotNullOrEmpty('PasswordCheck', 'Password Check is required');
         $validation->IsTrue(isset($user->Person->Name), 'Name is required');

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <!-- Basic component info -->
+  <base>
+    <name>Analyze overview</name>
+    <identifier>analyze-overview</identifier>
+    <author>Bohdan Iakymets</author>
+    <version>v1.0</version>
+    <view-type>3</view-type>
+    <folder>analyzeOverview</folder>
+    <js>analyzeOverview.js</js>
+    <description>Create analyze overview page.</description>
+  </base>
+  <!-- Supported plugins -->
+  <supported-plugins>
+    <plugin identifier="*" />
+  </supported-plugins>
+</config>
