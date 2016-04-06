@@ -34,5 +34,34 @@
             </div>
           </div>
         </div>
+        <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+              <span class="card-title black-text">Settings</span>
+              <span ng-repeat="settings_single in settings">
+                <div class="divider"></div>
+                <div class="section">
+                  <h5>{{settings_single.Name}}</h5>
+                  <div class="row">
+                    <div class="col s12 m6" ng-repeat="setting in settings_single.Items">
+                      <label for="notification">{{setting.Label}}</label>
+                      <div class="switch">
+                        <label ng-if="setting.Type == 5">
+                          Off
+                          <input type="checkbox" ng-model="setting.Value">
+                          <span class="lever"></span>
+                          On
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </div>
+            <div class="card-action">
+              <a class="btn" ng-click="SaveSettings()">Save settings</a>
+            </div>
+          </div>
+        </div>
     </div>
 </div>

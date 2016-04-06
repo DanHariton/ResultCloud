@@ -47,13 +47,12 @@ Analyzer also contain methods for processing saved results and return human read
 
 With ResultCloud it will connect in a few point, after uploading new submission plugin Parser will call Analyze Controller method for analyzing. And like in case with Dashboard, for analyze page it would have own service, which call visualization method and return data to client.
 
+Analyzer controller call \emph{analyze} only when new submission would be inserted into DB, in ImportService class.
 \section{Analyzer design}
 
-For right connecting with analyze controller, analyzer must have first of all static constant attribute with unique ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same in all Analyzer classes) and one function for visualizing data.  
+For right connecting with analyze controller, analyzer must have first of all static constant attribute with unique ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same in all Analyzer classes) and two functions for vizulizating data (Visualize, VisualizeSingle). Vizualizating functions will get data from AnalyzerController which get it from DB and return it in JSON.
 
 Method for processing data get in parameters: array of submission, new submission and plugin name. It must return ValidationResult object, with string in Data attribute, or array of string if it has a few resuls, or it can return empty result, with null in Data attribute.
-
-Method for visualizing data get array of rows from Analyze table, and return JSON object.
 
 \section{Kinds of Analyzer}
 
@@ -68,4 +67,19 @@ Here's some kinds of analyzer which results would be interesting for programmers
 
 \section{Notification design}
 
-Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will controller them. 
+Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will controller them. NotificationController will collect all Notifiers with the help of static function \emph{preLoad}. For notifing exist function \emph{notify(title, body, bodyShort, to)}, where \texttt{title} - is title of notification message, \texttt{body} - longest body text, \texttt{bodyShort} - short body of the message not longer than 140 letters, \texttt{to} - is an array of all adresses with the key of notifier ID. Function \emph{notify} calling notifier's function \emph{notify}, only for notifiers which have their IDs in \texttt{to} parameter's key.
+
+Also notifications divided to: Public and Private. Public notifications, is notifications which would be sent to public resources, like RSS or Twitter. Private notifications would be sent to private persons, like e-mail for exammple.
+
+Private notifications have settings for each user. And user can subscribe to each private notification.
+
+For Twitter notification is using TwitterAPIExchange with MIT license.
+
+\section{Notifier}
+
+Notifier is class for notification users in specific way. Notifier class is extend from BaseNotifier class.
+
+BaseNotifier class has only one function which will be in most cases the same in private notification. This is \emph{getSettings} function, which will returning needed settings field for each private notifier. 
+
+Notifier also have function \emph{notify}, which get parameters from NotificationController and send all needed notification messages.    
+\end{document}

@@ -18,6 +18,7 @@ class TemplateSettingsController
 {
     const GET = "GET";
     const SAVE = "SAVE";
+    const GET_BY_USER = "GET_BY_USER";
     
     /**
      * Get settings for given project
@@ -26,6 +27,10 @@ class TemplateSettingsController
      */
     public function Get($project)  {
         return FactoryService::TemplateSettingsService()->GetProjectSettings($project);
+    }
+
+    public function GetByUser($user)  {
+        return FactoryService::TemplateSettingsService()->GetUserSettings($user);
     }
 
     public function Save($templateSettings)  {
@@ -50,6 +55,10 @@ if (isset($_GET["method"]))	{
 
         case TemplateSettingsController::SAVE:
             $result = $TemplateSettingsController->Save($data);
+            break;
+
+        case TemplateSettingsController::GET_BY_USER:
+            $result = $TemplateSettingsController->GetByUser($data);
             break;
 
 		default:

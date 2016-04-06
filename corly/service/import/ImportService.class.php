@@ -103,6 +103,7 @@ class ImportService
                 }
             }
         }
+        $to["twitter"] = array();
         NotificationController::notify("New Submission", "New submission in ResultCloud", "New submission in ResultCloud", $to);
 
 

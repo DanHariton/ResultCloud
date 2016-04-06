@@ -283,7 +283,8 @@ class TemplateSettingsService
 
                 // Check, if is required, if so, check if is set
                 if ($templateSettingItem->Required) {
-                    $validation->IsTrue(!empty($templateSettingItem->Value), $templateSettingItem->Label . " is required");
+                    // var_dump($templateSettingItem);
+                    $validation->IsTrue(!empty($templateSettingItem->Value) || $templateSettingItem->Value === "0", $templateSettingItem->Label . " is required");
                 }
             }
         }
@@ -309,6 +310,36 @@ class TemplateSettingsService
 
         // Return validation
         return $validation;
+    }
+
+    /**
+     * Get project settings
+     * @param project to get settings for
+     * @return grouped settings
+     */
+    public function GetUserSettings($user)    {
+        // Get settings for given project
+        $templateSettings = FactoryDao::TemplateSettingsDao()->GetFilteredList(QueryParameter::Where('User', $user->Id))->ToList();
+
+        // Group by type
+        foreach ($templateSettings as $templateSetting) {
+
+             // Get settings by sort name
+             $templateSetting->Items = FactoryDao::TemplateSettingsItemDao()->GetFilteredList(QueryParameter::Where('Template', $templateSetting->Id))->ToList();
+
+             // Normalize all values
+             for ($index = 0; $index < count($templateSetting->Items); $index++)    {
+                $templateSetting->Items[$index] = $this->ConvertToInputType($templateSetting->Items[$index]);
+             }
+             
+             // Load component for each template
+             $component = new stdClass();
+             $component->Id = $templateSetting->Component; 
+             $templateSetting->Component = FactoryDao::ComponentDao()->Load($component);
+         }
+
+         // Return result
+         return $templateSettings;
     }
 
     /**
