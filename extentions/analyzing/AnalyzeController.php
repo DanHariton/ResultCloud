@@ -55,6 +55,11 @@ class AnalyzeController
             self::$AnalyzerList[$name::ANALYZER_ID] = $name;
         }
     }
+
+    static public function GetAnalyzersList()
+    {
+        return new LINQ(self::$AnalyzerList);
+    }
 }
 
 AnalyzeController::InitAnalyzers();

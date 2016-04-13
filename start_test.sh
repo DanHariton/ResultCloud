@@ -34,9 +34,9 @@ if [[ $RESULT =~ FAILURES ]]
 then
 	echo "There is errors in tests: "
 	echo "$RESULT"
-	echo "ResultCloud has errors" | mail -s "ResultCloud hele failure" $MAIL_ADDRESS
+	sh send_mail.sh "Deployment tests" "ResultCloud hele failure" $MAIL_ADDRESS
 else
 	echo "Testing was finished with success."
 	cp -r $TEST_FOLDER $PRODUCTION_FOLDER
-    echo "ResultCloud was updated" | mail -s "ResultCloud hele success" $MAIL_ADDRESS
+    sh send_mail.sh "Deployment tests" "ResultCloud hele success" $MAIL_ADDRESS
 fi

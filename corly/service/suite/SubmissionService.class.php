@@ -36,6 +36,7 @@ class SubmissionService
         // Save submission
         $submissionId = FactoryDao::SubmissionDao()->Save($submission->GetDbObject($projectId));
         $submission->setId($submissionId);
+        $validation->Data->setId($submissionId);
         
         // Save categories with test cases
         FactoryService::CategoryService()->SaveCategories($submission->GetCategories(), $submissionId);

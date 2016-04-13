@@ -6,6 +6,7 @@ Library::using(Library::UTILITIES);
 class Analyzer1
 {
     const ANALYZER_ID = "analyzer1";
+    const JS_CONTROLLER = "analyzer1.js";
     public function analyze(SubmissionTSE $submission, LINQ $submissionList, $plugin)
     {
         if ($plugin == "systemtap") {

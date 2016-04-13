@@ -104,6 +104,7 @@ class ImportService
             }
         }
         $to["twitter"] = array();
+        $to["rss"] = "http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId();
         NotificationController::notify("New Submission", "New submission in ResultCloud", "New submission in ResultCloud", $to);
 
 
