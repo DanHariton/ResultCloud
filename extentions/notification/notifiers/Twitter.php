@@ -20,7 +20,7 @@ class Twitter extends BaseNotifier
 		$requestMethod = 'POST';
 
         $postfields = array(
-		    'status' => 'new submission was added' 
+		    'status' => $bodyShort 
 		);
 
 		$twitter = new TwitterAPIExchange($settings);

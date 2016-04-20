@@ -7,8 +7,10 @@ class Analyzer1
 {
     const ANALYZER_ID = "analyzer1";
     const JS_CONTROLLER = "analyzer1.js";
+    private $is_interesting = false;
     public function analyze(SubmissionTSE $submission, LINQ $submissionList, $plugin)
     {
+        $this->is_interesting = false;
         if ($plugin == "systemtap") {
             $good = 0;
             $bad = 0;
@@ -54,9 +56,17 @@ class Analyzer1
             $res->Good = $good;
             $res->Bad = $bad;
             $res->Strange = $strange;
+            if ($good || $bad || $strange) {
+                $this->is_interesting = true;
+            }
             $validation = new ValidationResult(array(json_encode($res)));
             return $validation;
         }
+    }
+
+    public function isInteresting()
+    {
+        return $this->is_interesting;
     }
 
     public function Visualize(LINQ $data)
@@ -66,7 +76,7 @@ class Analyzer1
             $visualize[$value->GetSubmission()] = json_decode($value->GetResult());
         }
         return $visualize;
-    } 
+    }
 
     public function VisualizeSingle($data)
     {

@@ -78,35 +78,37 @@ class ImportService
 
         $project = new stdClass();
         $project->Id = $validation->Data->Project;
-        $tse_project = new ProjectTSE($project);
+        $tse_project = FactoryService::ProjectService()->LoadTSE($project);
         FactoryService::SubmissionService()->LoadSubmissions($tse_project, 5);
 
         $subList = new LINQ($tse_project->GetSubmissions());
         $subList->Pop();
         AnalyzeController::analyze($importValidation->Data, $subList, "systemtap");
-        $settingsService = new TemplateSettingsService();
-        $privateNotifiers = NotificationController::getPrivateNotifiers();
+        if (count(AnalyzeController::GetInterestingAnalyzers())) {
+            $settingsService = new TemplateSettingsService();
+            $privateNotifiers = NotificationController::getPrivateNotifiers();
 
-        $to = array();
-        $users = FactoryService::UserService()->GetList();
-        foreach ($privateNotifiers as $value) {
-            $to[$value] = array();
-        }
-        foreach ($users->ToList() as $user) {
-            $settings = $settingsService->GetByIdentifier($value, null, $user->Id);
-            error_log($settings->IsValid);
-            if ($settings->IsValid) {
-                if ($settings->Data['get-notify'] == "1") {
-                    foreach ($privateNotifiers as $value) {
-                        $to[$value][] = $user->Email;
+            $to = array();
+            $users = FactoryService::UserService()->GetList();
+            foreach ($privateNotifiers as $value) {
+                $to[$value] = array();
+            }
+            foreach ($users->ToList() as $user) {
+                $settings = $settingsService->GetByIdentifier($value, null, $user->Id);
+                error_log($settings->IsValid);
+                if ($settings->IsValid) {
+                    if ($settings->Data['get-notify'] == "1") {
+                        foreach ($privateNotifiers as $value) {
+                            $to[$value][] = $user->Email;
+                        }
                     }
                 }
             }
+            $to["twitter"] = array();
+            $to["rss"] = "http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId();
+            $body = "Submission with id ".$importValidation->Data->GetId()." has interesting results according to [".implode(',', AnalyzeController::GetInterestingAnalyzers())."] analyzers, for more information go there "."http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId();
+            NotificationController::notify("Project ".$tse_project->GetName()." has new interesting submission", $body, "New interesting submission in ResultCloud, "."http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId(), $to);
         }
-        $to["twitter"] = array();
-        $to["rss"] = "http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId();
-        NotificationController::notify("New Submission", "New submission in ResultCloud", "New submission in ResultCloud", $to);
-
 
         // Create dashboard data
         if (class_exists("DashboardParser"))    {

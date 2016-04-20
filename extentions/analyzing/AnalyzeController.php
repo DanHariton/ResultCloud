@@ -7,8 +7,10 @@ Library::using(Library::CORLY_SERVICE_FACTORY, ['FactoryService.class.php']);
 class AnalyzeController
 {
     static private $AnalyzerList = array();
+    static private $interesting_analyzers = array();
     static public function analyze(SubmissionTSE $submission, LINQ $submissionList, $plugin)
     {
+        self::$interesting_analyzers = array();
         $validation = new ValidationResult(array());
         foreach (self::$AnalyzerList as $value) {
             $analyzer = new $value();
@@ -17,11 +19,19 @@ class AnalyzeController
             if (!$validation->IsValid) {
                 return $validation;
             }
+            if ($analyzer->isInteresting()) {
+                self::$interesting_analyzers[] = $analyzer::ANALYZER_ID;
+            }
             foreach ($res->Data as $result) {
                 FactoryService::AnalyzerService()->SaveAnalyzerResults(array(new AnalyzerTSE($submission->GetId(), $analyzer::ANALYZER_ID, $result)));
             }
         }
         return $validation;
+    }
+
+    static public function GetInterestingAnalyzers()
+    {
+        return self::$interesting_analyzers;
     }
 
     static public function VisualizeByAnalyzer($analyzerId)
