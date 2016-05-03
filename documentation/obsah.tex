@@ -117,7 +117,11 @@ Notification mechanism must be flexible, and easy extended.
 
 \section{Architecture}
 
-Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will controlle them. NotificationController will collect all Notifiers with the help of static function 
+Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will control them. But as opposed to analyzers there will be several types of notifiers. First type is public notifiers, it means notifications would be send into some shared or public resources, like \emph{Twitter} for example. Private - means it notify each user separetly. According to this private notifiers must have settings, where user can check if he want to get notifications or not, and other options.
+
+\section{Notification Controller}
+
+Notification controller would have method for easy controlling notifications, which get all needed fields, like \emph{title}, \emph{body}, \emph{bodyShort} (for resources that accept only small messages), \emph{adreses} (list of all adreses that must recieve notification) and according to them send notifications. 
 
 \emph{preLoad}. For notifing exist function \emph{notify(title, body, bodyShort, to)}, where \texttt{title} - is title of notification message, \texttt{body} - longest body text, \texttt{bodyShort} - short body of the message not longer than 140 letters, \texttt{to} - is an array of all adresses with the key of notifier ID. Function \emph{notify} calling notifier's function \emph{notify}, only for notifiers which have their IDs in \texttt{to} parameter's key.
 
