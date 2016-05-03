@@ -4,61 +4,122 @@
 \chapter{Introduction in ResultCloud}
 \section{What is ResultCloud}
 
-ResultCloud is a system for management of long-term testing results. It's means, ResultCloud collect testing results for some project and compare it, so developer can easy find difference between them. In now days doesn't exist new, modern instruments for collecting and showing in humans readable form testing results. How wrote Fillip Matys: “Tools which solve that problem [3], are too old and fall behind all modern applications. One of the biggest problem of that tools is no oppotrunity to expand and with growing market of different mobile devices with internet connection not able to present data in responsive form.” So all instruments which we have now is too old, and doesn't extendable. But in ResultCloud prasing and management do modules. Each module is written for one type of testing results. For example module “DejaGnu summary v1.0” can parse and show only SystemTap results. 
+ResultCloud is a system for management of long-term testing results. This means that ResultCloud collects testing results for some project and compare it, so developer can easily find difference between them. Currently, there don't exist new, modern instruments for the collecting and the presentation testing results in readable form. As written by Fillip Matys: “Tools which solve that problem [3], are too old and fall behind all modern applications. One of the biggest problem of that tools is no opportunity to expand and with growing market of different mobile devices with internet connection not able to present data in responsive form.” So all instruments which we have now is too old, and doesn't extendable. But in ResultCloud parsing and management doing by modules. Each module is written for one type of testing results. For example module “DejaGnu summary v1.0” can parse and show only SystemTap results. 
 
-Data organization in ResultCloud is represent in Plugins. Plugins are modules, every plugin have own implementation of Parser, which parse input data, but save it in shared Project, Submission and etc entities. Hierarchy of shared entities is Projects  contains Submissions, Submissions is a results of a single series of tests, which also divide to Categories, Categories are divided to TestCases, and TestCases to Results.
+ResultCloud is a complex system. ResultCloud consist of two parts frontend and backend. Frontend is a part on the client side, made with the use of AngularJS. Angular in asynchronous format connecting with backend part. Backend also dividing on the smaller part. On the top of hierarchy are Controllers. Angular connect directly with controllers. Controllers has only one mission is to get request and parsed data give to Services. Services are very important part, they get a data and using different database entities, other services, plugins for returning a result to the controller, which return it to client. 
+
+For connecting with database exists Driver which first of all connecting to database, and after that connection using data access object (DAO). DAO consists all basic methods for working with database. Every entity must have DAO, which inherit base DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps easier work with entities.
+
+Data organization in ResultCloud is represent in Plugins. Plugin is the system for parsing and saving test's results of specific format. In the past plugins has all needed for self-installation, parsing and vizualization data, now vizualization is shared. 
+Each plugin has own implementation of Parser to parse input data, it is saved to a Project, Submission, etc. Hierarchy of shared entities is following: Projects  contains Submissions, Submissions is a results of a single series of tests, which also divide to Categories, Categories are divided to TestCases, and TestCases to Results.
+
 
 In this bachelor work I will analyzing Submissions, like their Results, and other stuff that may be interesting for people.
 
 \section{What is Submission}
 
-How I wrote on the top, submissions is a single testing result, the smallest part of every submission is Result, this part contain result of a single test from series of tests. All other part like Categories, TestCases are only organization unit. 
+As I wrote at the top, the submission is a single testing result. The smallest part of every submission is Result. This part contains result of a single test from series of tests. All other part like Categories, TestCases are only organization unit. 
 
-There are two way to import  new Submission, first is from web page, second is with the help of API. Then will include plugin for parse submission file. Every plugin has class Parser, for parsing files and put them to Database. Every plugin also has class Vizualization, for getting from DB submission data and return it in needed presentation. Vizualization can for graph, list or dashboard.  
+There are two ways to import a new Submission: first is from a web page, second is using the API. Then will include plugin for parse submission file. Every plugin has a class Parser, for parsing files and putting them into Database (DB). When client send file to \texttt{ImportController} or to \texttt{import} class, it call \texttt{ImportService}, which find needed plugin in DB, then include plugin's class \texttt{Parser} and call method \emph{ParseImport}. Parser return to \texttt{ImportService} \texttt{SubmissionTSE} object, which consists all parsed data as TSE objects. \texttt{ImportService} than save it to DB and return successful result to Controller or API class.
 
-\chapter{Mechanism design}
+\chapter{Analyzer Mechanism Design}
 
-Before start describing all possible kinds of analyzing, need think about how it possible easy add to whole system. So there must be some mechanism which would be like bridge between system and all kinds of analyzing.
+All analyzers must somehow unite into one working system. There must be mechanism for that. Mechanism must be not complicated and easy to extending. Thus it must easy to controll all analyzers and work with their results.
 
-That mechanism would get all existing kinds of analyzing and enable to use it. Mechanism also would provide entity for saving analyze data. Analyzer can't work with DB cause it's a good practice to divide work between separated modules, like “Divide and Conquer”, so analyzer should only analyze input data and visualize it, that all. Centralized method good for that case because user don't need to load needed analyzer and work with DB, all this stuff do Analyze Controller.
+\section{Architecture} 
 
-Analyze controller in the beginning get all needed submissions (it can be all submissions of project or only some of them), plugin name and new uploaded submission. Then put all this parameters to analyzer classes, which after processing return results back to analyze controller, which is save it to database(DB). Analyzer can include a few methods of analyze for different plugins. If analyzer doesn't support current plugin it return empty result. Also in ResultCloud exist simple method of analyzing (compare new submission with previous one), after making analyzing controller it can be rewriting to individual analyze class.
+There two type of architecture: module and built-in. Module type mean that Mechanism would be divided to the modules, like “Divide and Conquer”, one of the main advantage is easy extending. Second type is built-in, which means mechanism would be built-in whole ResultCloud system, one of the main advantage of this type is working speed.
 
-Analyze controller would provide methods for setup available analyzers. Field “Results” in Analyze entity will contain text data which depend only on analyzer. 
+I prefer first method, because difference in speed beetwen them would be to small, but easy extedning advantage is that what mechanism need. So lets start from main part, kernel of whole mechanism, \texttt{AnalyzerController}. 
 
-Analyzer also contain methods for processing saved results and return human readable result, in JSON. Analyze controller will collect all that results and it to client. 
+\section{AnalyzerController}
 
-With ResultCloud it will connect in a few point, after uploading new submission plugin Parser will call Analyze Controller method for analyzing. And like in case with Dashboard, for analyze page it would have own service, which call visualization method and return data to client.
+\texttt{AnalyzerController} would get all existing analyzers and use it. Mechanism also would provide entity for saving analyze data. Analyzer can't work with DB because in practice it is usually to divide work between separated modules, like “Divide and Conquer”, so analyzer should only analyze input data and visualize it, that all. Centralized method good for that case because user don't need to load needed analyzers and work with DB, all this stuff do \texttt{AnalyzeController}.
 
-Analyzer controller call \emph{analyze} only when new submission would be inserted into DB, in ImportService class.
+\section{Analyzer entity}
 
-Analyzer controller has attribute \emph{interesting_analyzers}, this is array, which contain list of analyzers which return interesting results. And if after call \emph{analyze} in ImportService class it will not be empty, it will run notification code, and notify all about interesting results.
-\chapter{Analyzer design}
+In the picture presents entity Analyzer, which contain four attributes. Attribute \emph{Submission} would have ID of the submission, that analyzer results belongs to. \emph{Project} is alternative attribute to \emph{Submission}, it would have ID of the project. \emph{Analyzer} contain machine analyzer ID. And \emph{Result} contain analyzer results, it is text attribute, every analyzers have own output results format.
 
-For right connecting with analyze controller, analyzer must have first of all static constant attribute with unique ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same in all Analyzer classes) and two functions for vizulizating data (Visualize, VisualizeSingle). Vizualizating functions will get data from AnalyzerController which get it from DB and return it in JSON.
+\section{AnalyzerController structure}
+
+As can be seen in the image, \texttt{AnalyzerController} is center part of whole analyzer mechanism. When application start \texttt{AnalyzerController} find all available analyzers, it is good for optimization. In \texttt{AnalyzerController} would be implement easy analyzer controlling. One method must run all analyzers which support current submission's plugin, and return result which \texttt{AnalyzerController} write to DB. Methods for vizualizating data.
+
+\section{Analyzers}
+
+\subsection{Analyzer design}
+
+For right connecting with analyze controller, analyzer must have first of all static constant attribute with unique machine ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same in all Analyzer classes) and two functions for vizulizating data (Visualize, VisualizeSingle). Vizualizating functions will get data from AnalyzerController which get it from DB and return it in JSON.
 
 Method for processing data get in parameters: array of submission, new submission and plugin name. It must return ValidationResult object, with string in Data attribute, or array of string if it has a few resuls, or it can return empty result, with null in Data attribute.
 
-Also analyzer have attribute called \emph{is_interesting} which contain status of previous analyzing, and if analyzing results will be interesting it return true, in other case false, it need to notifying about only interesting submissions.
+Also analyzer have attribute called \emph{is\_interesting} which contain status of previous analyzing, and if analyzing results will be interesting it return true, in other case false, it need to notifying about only interesting submissions.
 
-\chapter{Analyzer vizualisation}
+\subsection{Analyzer vizualisation}
 
-Because different analyzers use different methods fo vizualization there is needed to specificate different possibilites to vizualize information. For that goal exist directory \emph{templates} which contains folders for all analyzers with Angular derective and HTML templates. So component \texttt{analyzeOverview} always can upload all directives and for each analyzers results find correct view.
+Every submission has own analyzing results, that results will be presenting in individual page. Every analyzer have some space on that page. Because different analyzers use different methods for vizualization there is needed to specificate different possibilites to vizualize information. As mentioned in first chapter for vizualizating data ResultCloud use AngularJS and templates, so every analyzer must have own template and AngularJS  directive. On the image can be seen analyzers results page layout.
 
-\chapter{Kinds of Analyzer}
+\subsection{Kinds of Analyzer}
 
-Here's some kinds of analyzer which results would be interesting for programmers.
-- Find strange changes like if result has a long time the same value and than it change
-- Check a changes in tests, like if some test which is contained in all previous submissions just dissapear
-- Check if some test had a long sequence of some bad value like FAIL or ERROR and then take a PASS, but after take FAIL or ERROR again
-- Check changes from UNTESTED to some result
-- Check if presented a new tests
-- Check strange changes like FAIL -> ERROR
-- Check if count of bad results is get maximum
+Next step is propose some kind's of analyzers. Here is analyzers which results would be interesting for programmers.
+\begin{itemize} 
+\item Find strange changes like if result has a long time the same value and than it change
+\item Check a changes in tests, like if some test which is contained in all previous submissions just dissapear
+\item Check if some test had a long sequence of some bad value like FAIL or ERROR and then take a PASS, but after take FAIL or ERROR again
+\item Check changes from UNTESTED to some result
+\item Check if presented a new tests
+\item Check strange changes like FAIL -> ERROR
+\item Check if count of bad results is get maximum
+\end{itemize}
+
+\chapter{Analyzer Mechanism Implementation}
+
+Mechanism implemented in PHP and JS, becaue that languages was used for implementation ResultCloud.
+
+\section{Structure}
+
+Because analyzers are not a plugins or any else components in ResultCloud, analyzers will be \emph{extentions}. Whole system have own directory \emph{analyzing}. Which contain one directory for analyzers - \emph{analyzers}, and one for templates - \emph{templates}. Root directory also would contain \texttt{AnalyzeController}.
+
+Analyzing starts only when new submission would be inserted into DB, in \texttt{ImportService} class.
+
+\section{Entity}
+
+\emph{Analyzer} entity was converted into ResultCloud acceptable format. As a result was created three classes: \texttt{AnalyzerDao}, \texttt{AnalyzerTSE}, \texttt{AnalyzerService} and edited table installation class. \texttt{AnalyzerDao} class for working with \emph{Analyzer} table. \texttt{AnalyzerTSE} class for easy working with \texttt{AnalyzerDao} returned data. \texttt{AnalyzerService} class for different more complicated operations with data.
+
+\section{Analyzing}
+
+\subsection{AnalyzeController}
+
+\texttt{AnalyzeController} is a kernel of whole analyze mechanism. \texttt{AnalyzeController} implemented like static class (but PHP does not support static classes, thus all methods are static), because create more than one class object unnecessarily.
+
+When \texttt{AnalyzeController} be included, it execute \emph{InitAnalyzers} method, that scan \emph{analyzers} folder, put all available analyzers together and save it to \emph{\textdollar{AnalyzerList}} attribute. Method \emph{GetAnalyzersList} will return \texttt{LINQ} object with \emph{\textdollar{AnalyzerList}}.
+
+\emph{analyze} method get all analyzers from \emph{\textdollar{AnalyzerList}}, and call it analyzer method. Than returned value, or values it write to DB, and check if results are interesting by getting boolean value from analyzer method \emph{isInteresting}, if results are interesting it add analyzer ID to \emph{\textdollar{interesting\_analyzers}} array. Analyzers ID which has interesting value can get by method \emph{GetInterestingAnalyzers}. Method \emph{analyze} get like parameters: currently uploaded submission - \emph{\textdollar{submission}}, \texttt{LINQ} object with older submissions - \emph{\textdollar{submissionList}} and plugin name - \emph{\textdollar{plugin}}. Returning \texttt{ValidationResult} object with the analyze status.
+
+\subsection{Analyzer1}
+
+\texttt{Analyzer1} is simple analyzer created like example of analyzer structure. Analyzer get new submission and the last one, and compare it, if it has differences, analyze results became interesting. There are three categories of changes: GOOD, BAD, STRANGE. Output result format is JSON. It support only \"systemtap\" plugin.
+
+Every analyzers must have method \emph{analyze}, which analyzing input submissions according to plugin name. Parameters are the same as has method \emph{analyze} in \texttt{AnalyzeController}. Output results are in format JSON, it use JSON because of it simplicity. Attribute \emph{\$is\_interesting} is boolean type, and became \emph{true} only if analyzing results are interesting, otherwise it's false. As mentioned in previous part, analyzer has method \emph{isInteresting}, which return value of \emph{\$is\_interesting} attribute.
+
+\emph{ANALYZER\_ID} is constant attribute, that contain unique analyzer ID, that ID is used in \emph{Analyzer} table, like analyzer identifier. \emph{JS\_CONTROLLER} is also constant attribute which contain name of JavaScript file with AngularJS directive, it is used for vizualization analyzing results.
+
+\section{Vizualization}
+
+For vizualization data ResultCloud use AngularJS. AngularJS is JavaScript MVC (Model-View-Controller) framework, every page has own controller, thus analyzer page must have it too. \texttt{AnalyzeController.js} is file that contain controller for result page. \emph{analyze.html} is a page template. Some of the page, that contain several sort of data, building with the simplest part \emph{Components}, each component has individual settings, and individual Angular \texttt{directory}. Each component has \texttt{backend}, \texttt{frontend} folder and configuration file \emph{config.xml} with all settings and supported plugins. Backend folder consists \texttt{CBuilder} class, which return prepared for presenting data. 
+
+Analyzer page would use only one component \texttt{analyzeOverview}.It wouldn't have any settings, and will support all plugins. Angular directory first of all get array of analyzing results for current submission, than for each analyzer find own Angular directory, which put analyzer data to template and present it. 
+
+\texttt{CBuilder} class for \texttt{analyzeOverview} get \texttt{stdClass} object with attribute \emph{Submission} - submission ID. And call \texttt{AnalyzeController} method \emph{VisualizeBySubmission}. \emph{VisualizeBySubmission} get submission ID, for each analyzer get last inserted result, and give it to analyzer's method \emph{VisualizeSingle}, which parse results and return it like array. Then \emph{VisualizeBySubmission} put vizualization data together into associative array the key analyzer ID and value analyze results, and return it.
 
 \chapter{Notification design}
 
-Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will controller them. NotificationController will collect all Notifiers with the help of static function \emph{preLoad}. For notifing exist function \emph{notify(title, body, bodyShort, to)}, where \texttt{title} - is title of notification message, \texttt{body} - longest body text, \texttt{bodyShort} - short body of the message not longer than 140 letters, \texttt{to} - is an array of all adresses with the key of notifier ID. Function \emph{notify} calling notifier's function \emph{notify}, only for notifiers which have their IDs in \texttt{to} parameter's key.
+Notification mechanism must be flexible, and easy extended. 
+
+\section{Architecture}
+
+Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will controlle them. NotificationController will collect all Notifiers with the help of static function 
+
+\emph{preLoad}. For notifing exist function \emph{notify(title, body, bodyShort, to)}, where \texttt{title} - is title of notification message, \texttt{body} - longest body text, \texttt{bodyShort} - short body of the message not longer than 140 letters, \texttt{to} - is an array of all adresses with the key of notifier ID. Function \emph{notify} calling notifier's function \emph{notify}, only for notifiers which have their IDs in \texttt{to} parameter's key.
 
 Also notifications divided to: Public and Private. Public notifications, is notifications which would be sent to public resources, like RSS or Twitter. Private notifications would be sent to private persons, like e-mail for exammple.
 
