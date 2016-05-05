@@ -121,29 +121,103 @@ Like in case with Analyze Controller, I would divide notifications methods to th
 
 \section{Notification Controller}
 
-Notification controller would have method for easy controlling notifications, which get all needed fields, like \emph{title}, \emph{body}, \emph{bodyShort} (for resources that accept only small messages), \emph{adreses} (list of all adreses that must recieve notification) and according to them send notifications. 
+Notification controller would have method for easy controlling notifications, which get all needed fields, like \emph{title}, \emph{body}, \emph{bodyShort} (for resources that accept only small messages), \emph{adreses} (list of all adreses that must recieve notification) and according to them send notifications. Also \texttt{NotificationController} must provide methods for getting private and public \texttt{Notifiers}. When it will be included, first of all it scan space for available \texttt{Notifiers}.
 
-\emph{preLoad}. For notifing exist function \emph{notify(title, body, bodyShort, to)}, where \texttt{title} - is title of notification message, \texttt{body} - longest body text, \texttt{bodyShort} - short body of the message not longer than 140 letters, \texttt{to} - is an array of all adresses with the key of notifier ID. Function \emph{notify} calling notifier's function \emph{notify}, only for notifiers which have their IDs in \texttt{to} parameter's key.
+\section{Notification settings}
 
-Also notifications divided to: Public and Private. Public notifications, is notifications which would be sent to public resources, like RSS or Twitter. Private notifications would be sent to private persons, like e-mail for exammple.
+There must be mechanism for easy adding settings to \texttt{Notifier}, and settings must be present in user settings without editing any template for it. But user can editing only private settings, because public notifier settings are shared with other users, ResultCloud don't support user hierarchy, thus nobody can edit public notifier settings.
 
-Private notifications have settings for each user. And user can subscribe to each private notification.
+ResultCloud provide good tools for working with settings, like entities \texttt{TemplateSettings} and \texttt{TemplateSettingsItem}. \texttt{TemplateSettings} is for saving into DB setting template information, like setting type, setting name and etc. \texttt{TemplateSettingsItem} is for saving settings value.
 
-For Twitter notification is using TwitterAPIExchange with MIT license.
+\section{Notifier}
 
-\chapter{Notifier}
+\texttt{Notifier} is a base part of notification mechanism, without at least one notifiers it is useless. \texttt{Notifier} provide notification by itself, each notifier has own notification method, for example, by email, or Facebook.
 
-Notifier is class for notification users in specific way. Notifier class is extend from BaseNotifier class.
+\subsection{Notifiers architecture}
 
-BaseNotifier class has only one function which will be in most cases the same in private notification. This is \emph{getSettings} function, which will returning needed settings field for each private notifier. 
+Every \texttt{Notifier} for right work must have unique identifier(ID), by that ID \texttt{NotificationController} would identify notifiers, and in settings template it would have reference to notifier by it ID. \texttt{Notifier} must have one method for notification, and one method with settings. Each notifier has the same settings, thus that method can be pick out into some base paretn class, which would be extended by notifiers classes. \texttt{Notifier} must have attribute that identifies it like private or public notifier.
 
-Notifier also have function \emph{notify}, which get parameters from NotificationController and send all needed notification messages.
+As a notify method in \texttt{NotificationController}, notify method in \texttt{Notifier} get the same parameters, except address, address will not be associative array, but simple array with addresses supported in that notifier. 
 
-\chapter{Notifiers}
+\subsection{Notifier types}
 
-In that moment in ResultCloud are Email, Twitter and RSS notifiers.
+Within the confines of that bachelour work, there must be implemented these types of notifiers:
+\begin{itemize} 
+\item Email - notifies will be sent by email, this is private notifier
+\item Twitter - notifies will be sent into prepared twitter account, public notifier
+\item RSS - notifies will be present in RSS file, public notifier
+\end{itemize}  
 
-Each user has setting for email notification. If he want to get that type of notifications he can turn on this option into his settings. 
+\chapter{Notification mechanism implementation}
 
-Twitter and RSS notifiers are public notifiers so it don't need to get settings for each user. RSS notifier show news about latest interesting submission in each project, with URL to it. Twitter has short description with URL to the page with analyzer results to.
+As can be seen in image, \texttt{NotificationController} is a kernel, all notifiers are extended from \texttt{BaseNotifier} class.
+
+\section{Structure}
+
+Like analyzers, notification mechanism not a plugin or any else ResultCloud kernel part, thus it also be in \emph{extentions} folder, in own \emph{notification} folder. In root directory is located also \texttt{NotificationController}. All notifiers are located in \emph{notifiers} folder.
+
+Notification start only if analyzer return interesting result.
+
+\section{Settings}
+
+Basically all notifers will have same setting, this settings would enable or disable notification for notifier. But as mentioned in previous chapter, only private notifiers can use settings. Notification mechanism not working with settings, because list of addresses and notifiers must be assamble by those who sending, notification mechanism only get this list and send notification. 
+
+ResultCloud has tools for settings, not only in server side, but also in client side it has automatic form generation for settings. Here is example of default \emph{getSettings} method in \texttt{BaseNotifier} class, for better understanding how set up settings:
+
+\begin{alltt}
+public function getSettings()
+\{
+    \$settings = array();
+    \$settingsItem = array();
+
+    \textbackslash\textbackslash Setting label
+    \$settingsItem['label'] = "Get notifications by this way";
+    \textbackslash\textbackslash Setting ID for TemplateSettings entity
+    \$settingsItem['identifier'] = "get-notify";
+    \textbackslash\textbackslash Default value
+    \$settingsItem['default'] = "1";
+    \textbackslash\textbackslash Field type
+    \$settingsItem['type'] = TemplateSettingsItemType::CHECKBOX;
+    \textbackslash\textbackslash Is setting required
+    \$settingsItem['required'] = 'true';
+    \$settings[] = $settingsItem;
+
+    return \S$settings; 
+\}
+\end{alltt}
+
+\section{Notification}
+
+\subsection{NotificationController}
+
+Like in case with \texttt{AnalyzerController}, \texttt{NotificationController} is static to, all methods are static, because there is no reason to create more than one class instance in application.
+
+When \texttt{NotificationController} is included, first of all start method \emph{preLoad}, that method scan \emph{notifiers} folder, include and assamble array with all available notifiers. For notifing exist function \emph{notify(title, body, bodyShort, to)}, where \texttt{title} - is title of notification message, \texttt{body} - longest body text, \texttt{bodyShort} - short body of the message not longer than 140 letters, \texttt{to} - is an array of all adresses with the key of notifier ID. Function \emph{notify} calling notifier's function \emph{notify}, only for notifiers which have their IDs in \texttt{to} parameter's key.
+
+\texttt{NotificationController} also have different sorts of get methods: \emph{getNotifyIds} (return IDs of all notifiers), \emph{getPrivateNotifiers} (return array with IDs only for private notifiers) and \emph{getNotifierById} (return notifier object by notifier ID).
+
+\subsection{Notifier}
+
+Every notifier must extend \texttt{BaseNotifier} class with default settings, and if needed define own method \emph{getSettings} that in the begining call \emph{parent} method. Also notifier must have unique ID in constant \emph{NOTIFY\_ID}. \emph{NOTIFIER\_PUBLIC} is constant, which contain boolean value, if notifier is public it contain \emph{true}, otherwise \emph{false}. The most important method is \emph{notify}, it has same parameters like method \emph{notify} in \texttt{NotificationController}, except last address parameter, notifier would get not associative array, but simple array with addresses.
+
+\subsection{Notify1}
+
+\texttt{Notify1} is a private notifier that send notifications by email. It get array with email addresses and via default PHP \emph{mail} function send emails. Here notifier parameters:
+
+\begin{alltt}
+const NOTIFY_ID = "notify1";
+const NOTIFIER_PUBLIC = false;
+\end{alltt}
+
+\subsection{Twitter}
+
+\texttt{Twitter} is a public notifier that send new twittes with some interesting information to twitter account. Now it connected to my account \href{https://twitter.com/cyberbond95}{cyberbond95} . If analyzer would have interesting results it send new twitt to my account, and everyone can see it.
+
+\texttt{Twitter} work with Twitter API by using \texttt{TwitterAPIExchange} library, which was suggested in Twitter API documentation. It has MIT license.
+
+\subsection{RSS}
+
+\texttt{RSS} is a public notifier that create or update \emph{rss.xml} file in root folder. \emph{rss.xml} present one news for each project, if \texttt{RSS} get news for already existing in \emph{rss.xml} project, it update news, otherwise it just create new one.
+
+\texttt{RSS} work with RSS by using \texttt{SimpleXML} that is default in mostly PHP versions.
 %=========================================================================
