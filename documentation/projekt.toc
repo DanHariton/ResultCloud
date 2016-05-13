@@ -35,6 +35,7 @@
 \contentsline {subsection}{\numberline {6.3.3}Notify1}{17}{subsection.6.3.3}
 \contentsline {subsection}{\numberline {6.3.4}Twitter}{17}{subsection.6.3.4}
 \contentsline {subsection}{\numberline {6.3.5}RSS}{17}{subsection.6.3.5}
-\contentsline {chapter}{Appendices}{18}{section*.2}
-\contentsline {section}{List of Appendices}{19}{section*.3}
+\contentsline {chapter}{\numberline {7}Conclusion}{18}{chapter.7}
+\contentsline {chapter}{Appendices}{19}{section*.2}
+\contentsline {section}{List of Appendices}{20}{section*.3}
 \contentsfinish 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.21)  12 MAY 2016 01:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.21)  13 MAY 2016 02:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -816,16 +816,6 @@ Overfull \hbox (82.374pt too wide) in paragraph at lines 20--21
 LaTeX Warning: Reference `fig:result_cloud' on page 3 undefined on input line 2
 5.
 
-
-Underfull \hbox (badness 1406) in paragraph at lines 27--28
-[]\T1/lmr/m/n/10.95 For con-nect-ing with database ex-ists
- []
-
-
-Underfull \hbox (badness 1360) in paragraph at lines 27--28
-\T1/lmr/m/n/10.95 Driver which first of all con-nect-ing to
- []
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
@@ -963,9 +953,13 @@ Package pdftex.def Info: fig/notification_impl.png used on input line 262.
 LaTeX Warning: Reference `fig:not_impl' on page 16 undefined on input line 269.
 
 
-[16 <./fig/notification_impl.png>])
+[16 <./fig/notification_impl.png>] [17]
+Chapter 7.
+)
 No file projekt.bbl.
-[17] [18
+[18
+
+] [19
 
 ]
 \c@ttl@toc@chapters=\count136
@@ -976,7 +970,7 @@ No file projekt.ptc.
 \openout5 = `projekt.ptc'.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 216.
- [19]
+ [20]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 216.
  (./projekt.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 216.
@@ -989,7 +983,7 @@ Package rerunfilecheck Warning: File `projekt.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `projekt.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  89A3E14882A804D1F09E6B2CB1599EE3;5129.
+(rerunfilecheck)             After:  E9921486275B2273D921130D63F66B98;5223.
 
 LaTeX Warning: There were undefined references.
 
@@ -998,13 +992,13 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 12764 strings out of 493336
- 175066 string characters out of 6140391
+ 12766 strings out of 493336
+ 175082 string characters out of 6140391
  254056 words of memory out of 5000000
  15895 multiletter control sequences out of 15000+600000
  70958 words of font info for 55 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 34i,7n,32p,991b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,7n,32p,987b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ec.enc}</usr/
 share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/publ
@@ -1012,10 +1006,10 @@ ic/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/
 texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/
 lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf
 /fonts/type1/public/tex-gyre/qhvr.pfb>
-Output written on projekt.pdf (22 pages, 310014 bytes).
+Output written on projekt.pdf (23 pages, 311113 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 164 compressed objects within 2 object streams
- 66 named destinations out of 1000 (max. 500000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 169 compressed objects within 2 object streams
+ 68 named destinations out of 1000 (max. 500000)
  66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
