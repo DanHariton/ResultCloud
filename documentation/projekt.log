@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.21)  16 MAY 2016 07:20
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.21)  16 MAY 2016 13:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -707,7 +707,7 @@ File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 \@vyskaobr=\skip64
 \@sirkaobr=\skip65
 
-<fig/vut-zp2.pdf, id=177, 109.40875pt x 109.40875pt>
+<fig/vut-zp2.pdf, id=181, 109.40875pt x 109.40875pt>
 File: fig/vut-zp2.pdf Graphic file (type pdf)
  <use fig/vut-zp2.pdf>
 Package pdftex.def Info: fig/vut-zp2.pdf used on input line 139.
@@ -717,7 +717,7 @@ Overfull \hbox (109.58464pt too wide) in paragraph at lines 139--139
 [][] 
  []
 
-<fig/fit-zp2.pdf, id=178, 120.45pt x 120.45pt>
+<fig/fit-zp2.pdf, id=182, 120.45pt x 120.45pt>
 File: fig/fit-zp2.pdf Graphic file (type pdf)
  <use fig/fit-zp2.pdf>
 Package pdftex.def Info: fig/fit-zp2.pdf used on input line 139.
@@ -783,7 +783,7 @@ LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10.95> not available
 (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.38 ...erline {6.3}Notification}{18}{section.6.3}
+l.38 ...numberline {6.2}Settings}{17}{section.6.2}
                                                    [1
 
 
@@ -809,7 +809,7 @@ l.16 \chapter
 Chapter 2.
 [4
 
-] <fig/result-cloud.png, id=274, 597.23125pt x 844.15375pt>
+] <fig/result-cloud.png, id=279, 597.23125pt x 844.15375pt>
 File: fig/result-cloud.png Graphic file (type png)
 
 <use fig/result-cloud.png>
@@ -825,14 +825,14 @@ LaTeX Font Info:    Try loading font information for T1+lmtt on input line 53.
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [5 <./fig/result-cloud.png (PNG copy)>] [6]
 Chapter 3.
-<fig/entity.png, id=289, 143.53625pt x 136.51pt>
+<fig/entity.png, id=294, 143.53625pt x 136.51pt>
 File: fig/entity.png Graphic file (type png)
  <use fig/entity.png>
-Package pdftex.def Info: fig/entity.png used on input line 81.
+Package pdftex.def Info: fig/entity.png used on input line 89.
 (pdftex.def)             Requested size: 100.47467pt x 95.55634pt.
 
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 86
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 94
 .
 
 [7
@@ -846,61 +846,61 @@ Package epstopdf Info: Source file: <fig/analyzer-struct.eps>
 (epstopdf)                    size: 20697 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig/analyzer-struct-eps-co
 nverted-to.pdf fig/analyzer-struct.eps>
-(epstopdf)             \includegraphics on input line 98.
+(epstopdf)             \includegraphics on input line 106.
 Package epstopdf Info: Output file is already uptodate.
 
-<fig/analyzer-struct-eps-converted-to.pdf, id=298, 614.295pt x 794.97pt>
+<fig/analyzer-struct-eps-converted-to.pdf, id=303, 614.295pt x 794.97pt>
 File: fig/analyzer-struct-eps-converted-to.pdf Graphic file (type pdf)
 
 <use fig/analyzer-struct-eps-converted-to.pdf>
 Package pdftex.def Info: fig/analyzer-struct-eps-converted-to.pdf used on input
- line 98.
+ line 106.
 (pdftex.def)             Requested size: 491.43666pt x 135.2077pt.
 
-Overfull \hbox (58.95486pt too wide) in paragraph at lines 98--99
+Overfull \hbox (58.95486pt too wide) in paragraph at lines 106--107
  [][] 
  []
 
-<fig/warframe.png, id=300, 625.33624pt x 384.43625pt>
+<fig/warframe.png, id=305, 625.33624pt x 384.43625pt>
 File: fig/warframe.png Graphic file (type png)
  <use fig/warframe.png>
-Package pdftex.def Info: fig/warframe.png used on input line 119.
+Package pdftex.def Info: fig/warframe.png used on input line 127.
 (pdftex.def)             Requested size: 375.20464pt x 230.66351pt.
 
 [8 <./fig/analyzer-struct-eps-converted-to.pdf>] [9 <./fig/warframe.png>]
 [10]
 Chapter 4.
 
-Overfull \hbox (3.7677pt too wide) in paragraph at lines 150--151
-[]\T1/lmr/m/n/10.95 Analyzing starts only when new sub-mis-sion would be in-ser
-ted into DB, in \T1/lmtt/m/n/10.95 ImportService
+Overfull \hbox (1.06107pt too wide) in paragraph at lines 158--159
+[]\T1/lmr/m/n/10.95 Analyzing starts only af-ter new sub-mis-sion would be in-s
+erted into DB, in \T1/lmtt/m/n/10.95 ImportService
  []
 
-<fig/analyzer-implementation.png, id=321, 424.58624pt x 274.02374pt>
+<fig/analyzer-implementation.png, id=327, 424.58624pt x 274.02374pt>
 File: fig/analyzer-implementation.png Graphic file (type png)
 
 <use fig/analyzer-implementation.png>
-Package pdftex.def Info: fig/analyzer-implementation.png used on input line 160
+Package pdftex.def Info: fig/analyzer-implementation.png used on input line 168
 .
 (pdftex.def)             Requested size: 339.66945pt x 219.21928pt.
  [11
 
 ] [12 <./fig/analyzer-implementation.png>]
-Overfull \hbox (3.81316pt too wide) in paragraph at lines 192--193
+Overfull \hbox (3.81316pt too wide) in paragraph at lines 200--201
 \T1/lmtt/m/n/10.95 Analyzer2 \T1/lmr/m/n/10.95 is a sam-ple an-a-lyzer, it look
  for changes in sub-mis-sion's re-sults, from UNTESTED
  []
 
-<fig/temp_res.png, id=333, 1371.1225pt x 650.43pt>
+<fig/temp_res.png, id=340, 1371.1225pt x 650.43pt>
 File: fig/temp_res.png Graphic file (type png)
  <use fig/temp_res.png>
-Package pdftex.def Info: fig/temp_res.png used on input line 211.
+Package pdftex.def Info: fig/temp_res.png used on input line 219.
 (pdftex.def)             Requested size: 411.33992pt x 195.1305pt.
 
 [13] [14 <./fig/temp_res.png>]
 Chapter 5.
 
-Overfull \hbox (4.26784pt too wide) in paragraph at lines 254--255
+Overfull \hbox (4.26784pt too wide) in paragraph at lines 262--263
 []\T1/lmr/m/n/10.95 ResultCloud pro-vide good tools for work-ing with set-tings
 , like en-ti-ties \T1/lmtt/m/n/10.95 TemplateSettings
  []
@@ -908,7 +908,7 @@ Overfull \hbox (4.26784pt too wide) in paragraph at lines 254--255
 [15
 
 ]
-Overfull \hbox (43.38217pt too wide) in paragraph at lines 262--263
+Overfull \hbox (43.38217pt too wide) in paragraph at lines 270--271
 \T1/lmr/m/n/10.95 Every \T1/lmtt/m/n/10.95 Notifier \T1/lmr/m/n/10.95 for right
  work must have unique iden-ti-fier(ID), by that ID \T1/lmtt/m/n/10.95 Notifica
 tionController
@@ -917,7 +917,7 @@ tionController
 [16]
 Chapter 6.
 
-Overfull \hbox (4.68623pt too wide) in paragraph at lines 278--279
+Overfull \hbox (4.68623pt too wide) in paragraph at lines 286--287
 \T1/lmr/m/n/10.95 in im-age, \T1/lmtt/m/n/10.95 NotificationController \T1/lmr/
 m/n/10.95 is a ker-nel, all no-ti-fiers are ex-tended from \T1/lmtt/m/n/10.95 B
 aseNotifier
@@ -925,11 +925,11 @@ aseNotifier
 
 [17
 
-] <fig/notification_impl.png, id=359, 675.52374pt x 138.5175pt>
+] <fig/notification_impl.png, id=366, 675.52374pt x 138.5175pt>
 File: fig/notification_impl.png Graphic file (type png)
 
 <use fig/notification_impl.png>
-Package pdftex.def Info: fig/notification_impl.png used on input line 318.
+Package pdftex.def Info: fig/notification_impl.png used on input line 326.
 (pdftex.def)             Requested size: 405.31737pt x 83.11113pt.
  [18 <./fig/notification_impl.png>] [19]
 Chapter 7.
@@ -951,13 +951,13 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 219.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 219.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 219.
 Package rerunfilecheck Info: File `projekt.out' has not changed.
-(rerunfilecheck)             Checksum: D978DEF0BF8D3D931CEF60A88F671F8B;5734.
+(rerunfilecheck)             Checksum: 709D17C26B6E321802EA6CE09F8CD608;5841.
  ) 
 Here is how much of TeX's memory you used:
- 12841 strings out of 493336
- 176148 string characters out of 6140391
+ 12840 strings out of 493336
+ 176161 string characters out of 6140391
  258808 words of memory out of 5000000
- 15948 multiletter control sequences out of 15000+600000
+ 15946 multiletter control sequences out of 15000+600000
  70958 words of font info for 55 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  34i,7n,32p,1134b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -969,10 +969,10 @@ lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/
 fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10
 .pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts
 /type1/public/tex-gyre/qhvr.pfb>
-Output written on projekt.pdf (25 pages, 342711 bytes).
+Output written on projekt.pdf (25 pages, 344659 bytes).
 PDF statistics:
- 435 PDF objects out of 1000 (max. 8388607)
- 377 compressed objects within 4 object streams
- 78 named destinations out of 1000 (max. 500000)
- 410 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 443 PDF objects out of 1000 (max. 8388607)
+ 385 compressed objects within 4 object streams
+ 79 named destinations out of 1000 (max. 500000)
+ 418 words of extra memory for PDF output out of 10000 (max. 10000000)
 

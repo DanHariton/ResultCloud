@@ -52,6 +52,14 @@ For connecting with database there is exist a Driver that connected to database,
 
 All ResultCloud capabilities like submission overview, project overview and etc. are components, it means that they has their own settings and should be installed manually. Each component has his own configuration file in which defined component's ID, which plugins component support and other. Component system make possible to easily extend ResultCloud. But components can not save data or change it, components only prepare and vizualize data. Every component has his own frontend and backend part. Backend part is a file \emph{CBuilder} with \texttt{CBuilder} class, method \emph{Get} prepare data and return them. Frontend is a directive that get prepared data and vizualize them.   
 
+\subsection{Utilities}
+
+ResultCloud has utilities, the most important utilities that was used in this bachelor's work, described here:
+
+\textbf{LINQ} -- idea of this utility was get from C\# and rewrite to PHP. \texttt{LINQ} is a class for working with arrays, it has a lot of methods getting array elements, filtering array elements and doing other operations with arrays that can not do default PHP functions.
+
+\textbf{ValidationResult} -- this is used for getting additional validation metadata. Many methods in ResultCloud using \texttt{ValidationResult}. If useful because it helps better discover errors. \texttt{ValidationResult} has attribute \emph{Data} which contain data that would be return to caller method, attribute \emph{IsValid} which contain validation state and attribute \emph{Errors} which contain array of strings that describe occurred errors.
+
 \subsection{Data store organization}
 
 Data organization in ResultCloud is represent in Plugins. Plugin is a system for parse and save specific formated test's results. In the past plugins has all demanded for self-installation, parsing and vizualization data, now vizualization is shared. 
@@ -123,7 +131,7 @@ Also analyzer has an attribute called \emph{is\_interesting} which contains stat
 
 \subsection{Analyzer vizualisation}
 
-Every submission has his own analysis results, that results will be presenting in personal page. Image\ref{fig:temp} show that every analyzer has some space on that page. Because different analyzers use different methods for vizualization, there is need to specificate different possibilites to vizualize information. As mentioned in first chapter ResultCloud use AngularJS for vizualizating data and templates, so every analyzer must have his own template and AngularJS  directive. Image shows layout of analysis results.
+Every submission has his own analysis results, that results will be presenting in personal page. Image\ref{fig:temp} show that every analyzer has some space on that page. Because different analyzers use different methods for vizualization, there is need to specificate different possibilites to vizualize information. As mentioned in chapter \ref{ch:resultcloud} ResultCloud use AngularJS for vizualizating data and templates, so every analyzer must have his own template and AngularJS  directive. Image shows layout of analysis results.
 
 \subsection{Kinds of Analyzer}
 
@@ -147,7 +155,7 @@ In this chapter is described mechanism implementation. Mechanism implemented in 
 
 Because analyzers are not a plugins or any else components in ResultCloud, analyzers will be \emph{extentions}. Whole system have own directory \emph{analyzing}. Which contain one directory for analyzers - \emph{analyzers}, and one for templates - \emph{templates}. Root directory also would contain \texttt{AnalyzeController}.
 
-Analyzing starts only when new submission would be inserted into DB, in \texttt{ImportService} class.
+Analyzing starts only after new submission would be inserted into DB, in \texttt{ImportService} class.
 
 \section{Entity}
 
@@ -168,17 +176,17 @@ Analyzing starts only when new submission would be inserted into DB, in \texttt{
 
 When \texttt{AnalyzeController} be included, it execute \emph{InitAnalyzers} method, that scan \emph{analyzers} folder, put all available analyzers together and save it to \emph{\textdollar{AnalyzerList}} attribute. Method \emph{GetAnalyzersList} will return \texttt{LINQ} object with \emph{\textdollar{AnalyzerList}}.
 
-\emph{analyze} method get all analyzers from \emph{\textdollar{AnalyzerList}}, and call it analyzer method. Than returned value, or values it write to DB, and check if results are interesting by getting boolean value from analyzer method \emph{isInteresting}, if results are interesting it add analyzer ID to \emph{\textdollar{interesting\_analyzers}} array. Analyzers ID which has interesting value can get by method \emph{GetInterestingAnalyzers}. Method \emph{analyze} get like parameters: currently uploaded submission - \emph{\textdollar{submission}}, \texttt{LINQ} object with older submissions - \emph{\textdollar{submissionList}} and plugin name - \emph{\textdollar{plugin}}. Returning \texttt{ValidationResult} object with the analyze status.
+\emph{analyze} method get all analyzers from \emph{\textdollar{AnalyzerList}}, and call it analyzer method. Than returned value, or values it write to DB, and check if results are interesting by getting boolean value from analyzer method \emph{isInteresting}, if results are interesting it add analyzer ID to \emph{\textdollar{interesting\_analyzers}} array. Analyzers ID which has interesting value can get by method \emph{GetInterestingAnalyzers}. Method \emph{analyze} get in parameters: currently uploaded submission - \emph{\textdollar{submission}}, \texttt{LINQ} object with older submissions - \emph{\textdollar{submissionList}} and plugin name - \emph{\textdollar{plugin}}. Returning \texttt{ValidationResult} object with the analysis status.
 
 \subsection{Analyzer1}
 
-\texttt{Analyzer1} is simple analyzer created like example of analyzer structure. Analyzer get new submission and the last one, and compare it, if it has differences, analyze results became interesting. There are three categories of changes: GOOD, BAD, STRANGE. Output result format is JSON. It support only \"systemtap\" plugin.
+\texttt{Analyzer1} is simple analyzer created like example of analyzer structure. Analyzer get new submission and the last one, and compare it, if it has differences, analyze results became interesting. There are three categories of changes: GOOD, BAD, STRANGE. Output result format is JSON. It support only "systemtap" plugin.
 
-Every analyzers must have method \emph{analyze}, which analyzing input submissions according to plugin name. Parameters are the same as has method \emph{analyze} in \texttt{AnalyzeController}. Output results are in format JSON, it use JSON because of it simplicity. Attribute \emph{\$is\_interesting} is boolean type, and became \emph{true} only if analyzing results are interesting, otherwise it's false. As mentioned in previous part, analyzer has method \emph{isInteresting}, which return value of \emph{\$is\_interesting} attribute.
+Every analyzers must have method \emph{analyze}, which analyzing input submissions according to plugin name. Parameters are the same as has method \emph{analyze} in \texttt{AnalyzeController}. Output results are in format JSON, it use JSON because of it simplicity. Attribute \emph{\$is\_interesting} is boolean type, and became \emph{true} only if analysis results are interesting, otherwise it is false. As mentioned in previous part, analyzer has method \emph{isInteresting}, which return value of \emph{\$is\_interesting} attribute.
 
 \emph{ANALYZER\_ID} is constant attribute, that contain unique analyzer ID, that ID is used in \emph{Analyzer} table, like analyzer identifier. \emph{JS\_CONTROLLER} is also constant attribute which contain name of JavaScript file with AngularJS directive, it is used for vizualization analyzing results.
 
-\texttt{Analyzer1} get last imported submission and new imported submission, than by using \emph{foreach} construction get each category from last imported submission (let call it \emph{category1}) and try to find category with the same name in new imported submission (let call it \emph{category2}), if the same category not exists it get next category, othewise it doing the same with test cases, it get each test case from \emph{category1} and try to find test case with the same name in \emph{category2}, if test cases with the same names was found, it compare their results, if results with the same key has different value and differnce is GOOD (FAIL $\rightarrow$ PASS), BAD (PASS $\rightarrow$ FAIL), STRANGE (FAIL $\rightarrow$ ERROR), it increment variable that responsible for one of the differnce type and in the end return \texttt{ValidationResult} object with result in JSON format. Example of result in JSON format:
+\texttt{Analyzer1} get last imported submission and new imported submission, than by using \emph{foreach} construction get each category from last imported submission (let call it \emph{category1}) and try to find category with the same name in new imported submission (let call it \emph{category2}), if the same category not exists it get next category, othewise it doing the same with test cases, it get each test case from \emph{category1} and try to find test case with the same name in \emph{category2}, if test cases with the same names was found, it compare their results, if results with the same key has different value and differnce is GOOD (FAIL $\rightarrow$ PASS), BAD (PASS $\rightarrow$ FAIL), STRANGE (FAIL $\rightarrow$ ERROR), it increment variable that responsible for one of the differnce types and in the end return \texttt{ValidationResult} object with result in JSON format. Example of result in JSON format:
 \begin{alltt}
 \{
     "Good": 8,
@@ -189,7 +197,7 @@ Every analyzers must have method \emph{analyze}, which analyzing input submissio
 
 \subsection{Analyzer2}
 
-\texttt{Analyzer2} is a sample analyzer, it look for changes in submission's results, from UNTESTED to any other value. It has \emph{ANALYZER\_ID} - \"analyzer2\" and \emph{JS\_CONTROLLER} - \"analyzer2.js\". It support only \"systemtap\" plugin. Output result format is JSON. It work in the same way like \texttt{Analyzer1}, it get last imported submission and compare it with new imported submission, if results with the same key has different value and last imported has value UNTESTED, analyzer save path to result and new value to object. Here is an example of that object in JSON format:
+\texttt{Analyzer2} is a sample analyzer, it look for changes in submission's results, from UNTESTED to any other value. It has \emph{ANALYZER\_ID} - "analyzer2" and \emph{JS\_CONTROLLER} - "analyzer2.js". It support only "systemtap" plugin. Output result's format is JSON. It work in the same way like \texttt{Analyzer1}, it get last imported submission and compare it with new imported submission, if results with the same key has different value and last imported has value UNTESTED, analyzer save path to result and new value to object. Here is an example of that object in JSON format:
 \begin{alltt}
 \{
     "Categories": \{
@@ -204,7 +212,7 @@ Every analyzers must have method \emph{analyze}, which analyzing input submissio
 
 \section{Vizualization}
 
-For vizualization data ResultCloud use AngularJS. AngularJS is JavaScript MVC (Model-View-Controller) framework, every page has own controller, thus analyzer page must have it too. \texttt{AnalyzeController.js} is file that contain controller for result page. \emph{analyze.html} is a page template. Some of the page, that contain several sort of data, building with the simplest part \emph{Components}, each component has individual settings, and individual Angular \texttt{directory}. Each component has \texttt{backend}, \texttt{frontend} folder and configuration file \emph{config.xml} with all settings and supported plugins. Backend folder consists \texttt{CBuilder} class, which return prepared for presenting data. 
+As was mentioned in chapter \ref{ch:resultcloud} for vizualization data ResultCloud use AngularJS. AngularJS is JavaScript MVC (Model-View-Controller) framework, every page has own controller, thus analyzer page must have it too. \texttt{AnalyzeController.js} is file that contain controller for analysis result page. \emph{analyze.html} is a page template. Some of the page, that contain several sort of data, building with the simplest part \emph{Components}, each component has individual settings, and individual Angular \texttt{directory}. Each component has \texttt{backend}, \texttt{frontend} folder and configuration file \emph{config.xml} with all settings and supported plugins. Backend folder consists \texttt{CBuilder} class, which return prepared for presenting data. 
 
 \begin{figure}
   \centering
