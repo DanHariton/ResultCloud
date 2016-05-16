@@ -27,6 +27,8 @@
 \usepackage{url}
 \usepackage{alltt}
 \usepackage{wrapfig}
+% \usepackage{natbib}
+% \usepackage[backend=bibtex]{biblatex}
 \DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
 
 %zde muzeme vlozit vlastni balicky
@@ -113,8 +115,8 @@
 }
 
 %Abstrakt (cesky, slovensky ci anglicky)
-\abstract[cs]{Zadaní teto bakalařské práce je navrhnout a implementovat mechanism pro analyzu a oznamení uživatele o zajimavých změnách v vysledcích sady testů. Mechanismy museji byt snadno rozširitelné a dobře integrovane v ResultCloud.}
-\abstract[en]{Assignment of this bachelor work is design and implement mechanism for analyzing and notifing user about interesting changes in test results.}
+\abstract[cs]{Většinou vysledky testů jsou stejné a proto ne nesou žadnou užitečnou informace, vyvojaře museji pořad probrat spoustu zbytečné informace aby najít něco zajimavého, tudiž vyvojař potřebuje nastroj pro analyzu testovacích vysledků a v připadě zajimavé informace oznamení uživatele. Tento nastroj ušetři spoustu času. Zadaní teto bakalařské práce je navrhnout a implementovat mechanism pro analyzu a oznamení uživatele o zajimavých změnách v vysledcích sady testů. Mechanismy museji byt snadno rozširitelné a dobře integrovane v ResultCloud. Na začatku musím prostudovat ResultCloud a na zakladě ziskaných znalosti rozšiřit ResultCloud o analyzátor a oznamovatel. Nastroj je implementovan pomoci AngularJS a PHP.}
+\abstract[en]{Tests results has mostly the same values, therefore they not contain any important or interesting information, developers must spend a lot of time for looking for something interesting in tests results, thus developer require tool for analysis results and in case finding interesting information notify user about it. This tool can save a lot of time. Assignment of this bachelor work is design and implement mechanism for analyzing and notifing user about interesting changes in test results. In the beginning I must learn ResultCloud and based on acquired knowledge extend ResultCloud.}
 %Klicova slova (cesky, slovensky ci anglicky)
 \keywords[cs]{Sem budou zapsána jednotlivá klíčová slova v českém (slovenském) jazyce, oddělená čárkami.}
 \keywords[en]{Sem budou zapsána jednotlivá klíčová slova v anglickém jazyce, oddělená čárkami.}
@@ -180,6 +182,7 @@ Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.}
   \fi
 \fi
   \begin{flushleft}
+  \nocite{*}
   \bibliography{literatura} % viz. literatura.bib
   \end{flushleft}
 
@@ -198,18 +201,18 @@ Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.}
 \fi
   \appendixpage
 
-\ifslovak
-  \section*{Zoznam príloh}
-  \addcontentsline{toc}{section}{Zoznam príloh}
-\else
-  \ifczech
-    \section*{Seznam příloh}
-    \addcontentsline{toc}{section}{Seznam příloh}
-  \else
-    \section*{List of Appendices}
-    \addcontentsline{toc}{section}{List of Appendices}
-  \fi
-\fi
+% \ifslovak
+%   \section*{Zoznam príloh}
+%   \addcontentsline{toc}{section}{Zoznam príloh}
+% \else
+%   \ifczech
+%     \section*{Seznam příloh}
+%     \addcontentsline{toc}{section}{Seznam příloh}
+%   \else
+%     \section*{List of Appendices}
+%     \addcontentsline{toc}{section}{List of Appendices}
+%   \fi
+% \fi
   \startcontents[chapters]
   \printcontents[chapters]{l}{0}{\setcounter{tocdepth}{2}}
   \input{prilohy} % viz. prilohy.tex
