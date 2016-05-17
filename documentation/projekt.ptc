@@ -1,48 +1,51 @@
 \select@language {english}
 \contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
 \contentsline {chapter}{\numberline {2}Introduction in ResultCloud}{4}{chapter.2}
-\contentsline {section}{\numberline {2.1}What is ResultCloud}{4}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Internal structure}{4}{subsection.2.1.1}
-\contentsline {subsubsection}{AngularJS}{5}{section*.2}
-\contentsline {subsubsection}{Backend}{5}{section*.3}
-\contentsline {subsection}{\numberline {2.1.2}Components}{5}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Utilities}{6}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}Data store organization}{6}{subsection.2.1.4}
-\contentsline {section}{\numberline {2.2}What is Submission}{6}{section.2.2}
-\contentsline {chapter}{\numberline {3}Analyzer Mechanism Design}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Architecture}{7}{section.3.1}
-\contentsline {section}{\numberline {3.2}AnalyzerController}{7}{section.3.2}
-\contentsline {section}{\numberline {3.3}Analyzer entity}{7}{section.3.3}
-\contentsline {section}{\numberline {3.4}AnalyzerController structure}{8}{section.3.4}
-\contentsline {section}{\numberline {3.5}Analyzers}{8}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Analyzer design}{8}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Analyzer vizualisation}{9}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Kinds of Analyzer}{9}{subsection.3.5.3}
-\contentsline {chapter}{\numberline {4}Analyzer Mechanism Implementation}{11}{chapter.4}
-\contentsline {section}{\numberline {4.1}Structure}{11}{section.4.1}
-\contentsline {section}{\numberline {4.2}Entity}{11}{section.4.2}
-\contentsline {section}{\numberline {4.3}Analyzing}{11}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}AnalyzeController}{11}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Analyzer1}{12}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Analyzer2}{13}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Vizualization}{13}{section.4.4}
-\contentsline {chapter}{\numberline {5}Notification design}{15}{chapter.5}
-\contentsline {section}{\numberline {5.1}Architecture}{15}{section.5.1}
-\contentsline {section}{\numberline {5.2}Notification Controller}{15}{section.5.2}
-\contentsline {section}{\numberline {5.3}Notification settings}{15}{section.5.3}
-\contentsline {section}{\numberline {5.4}Notifier}{16}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Notifiers architecture}{16}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}Notifier types}{16}{subsection.5.4.2}
-\contentsline {chapter}{\numberline {6}Notification mechanism implementation}{17}{chapter.6}
-\contentsline {section}{\numberline {6.1}Structure}{17}{section.6.1}
-\contentsline {section}{\numberline {6.2}Settings}{17}{section.6.2}
-\contentsline {section}{\numberline {6.3}Notification}{18}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}NotificationController}{18}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}Notifier}{18}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}Notify1}{19}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {6.3.4}Twitter}{19}{subsection.6.3.4}
-\contentsline {subsection}{\numberline {6.3.5}RSS}{19}{subsection.6.3.5}
-\contentsline {chapter}{\numberline {7}Conclusion}{20}{chapter.7}
-\contentsline {chapter}{Bibliography}{21}{chapter*.4}
-\contentsline {chapter}{Appendices}{22}{section*.5}
+\contentsline {section}{\numberline {2.1}Testing}{4}{section.2.1}
+\contentsline {section}{\numberline {2.2}What is ResultCloud}{4}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Internal structure}{5}{subsection.2.2.1}
+\contentsline {subsubsection}{Frontend (AngularJS)}{5}{section*.2}
+\contentsline {subsubsection}{Backend}{6}{section*.3}
+\contentsline {subsection}{\numberline {2.2.2}Components}{6}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Utilities}{6}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Data store organization}{6}{subsection.2.2.4}
+\contentsline {section}{\numberline {2.3}What is Submission}{7}{section.2.3}
+\contentsline {chapter}{\numberline {3}Analyzer Mechanism Design}{8}{chapter.3}
+\contentsline {section}{\numberline {3.1}Architecture}{8}{section.3.1}
+\contentsline {section}{\numberline {3.2}AnalyzerController}{8}{section.3.2}
+\contentsline {section}{\numberline {3.3}Analyzer entity}{8}{section.3.3}
+\contentsline {section}{\numberline {3.4}AnalyzerController structure}{9}{section.3.4}
+\contentsline {section}{\numberline {3.5}Analyzers}{9}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Analyzer design}{9}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Analyzer vizualisation}{10}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Kinds of Analyzer}{10}{subsection.3.5.3}
+\contentsline {chapter}{\numberline {4}Analyzer Mechanism Implementation}{12}{chapter.4}
+\contentsline {section}{\numberline {4.1}Structure}{12}{section.4.1}
+\contentsline {section}{\numberline {4.2}Entity}{12}{section.4.2}
+\contentsline {section}{\numberline {4.3}Analyzing}{12}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}AnalyzeController}{12}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Analyzer1}{13}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Analyzer2}{14}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Vizualization}{14}{section.4.4}
+\contentsline {section}{\numberline {4.5}Evaluation}{15}{section.4.5}
+\contentsline {chapter}{\numberline {5}Notification design}{16}{chapter.5}
+\contentsline {section}{\numberline {5.1}Architecture}{16}{section.5.1}
+\contentsline {section}{\numberline {5.2}Notification Controller}{16}{section.5.2}
+\contentsline {section}{\numberline {5.3}Notification settings}{16}{section.5.3}
+\contentsline {section}{\numberline {5.4}Notifier}{17}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Notifiers architecture}{17}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Notifier types}{17}{subsection.5.4.2}
+\contentsline {chapter}{\numberline {6}Notification mechanism implementation}{18}{chapter.6}
+\contentsline {section}{\numberline {6.1}Structure}{18}{section.6.1}
+\contentsline {section}{\numberline {6.2}Settings}{18}{section.6.2}
+\contentsline {section}{\numberline {6.3}Notification}{19}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}NotificationController}{19}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}Notifier}{19}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Notify1}{20}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}Twitter}{20}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}RSS}{20}{subsection.6.3.5}
+\contentsline {section}{\numberline {6.4}Evaluation}{20}{section.6.4}
+\contentsline {chapter}{\numberline {7}Conclusion}{22}{chapter.7}
+\contentsline {chapter}{Bibliography}{23}{chapter*.4}
+\contentsline {chapter}{Appendices}{24}{section*.5}
 \contentsfinish 

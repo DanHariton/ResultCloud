@@ -3,32 +3,37 @@
 
 \chapter{Introduction}
 
-The main goal of the project is to design and develop a mechanism for analyzing and notifying users about interesting changes in new uploaded submissions. Submission is a representation of results of tests series in ResultCloud. ResultCloud is a system for management of long-term testing results. The mechanism must support a few types of notifications and has possibility to add more. The analysis mechanism must also have interface for presentation results. An interested people would be able to get notifications about interesting results of the analysis.
+The main goal of the project is to design and develop a mechanism for analyzing and notifying users about interesting changes in new uploaded submissions. Submission is a representation of results of tests series in ResultCloud. ResultCloud is a system for management of long-term testing results. The mechanism must support a few types of notifications (for example notifications by email or by twitter) and has possibility to add more. The analysis mechanism must also have interface for presentation results. An interested people would be able to get notifications about interesting results of the analysis.
+% It is important and useful because the biggest part of the test results are not interesting and has useless information, like the same testing results. Thus, the main goal of the analyzing is to find the interesting results and show them to user.
 
-It is important and useful because the biggest part of the test results are not interesting and has useless information, like the same testing results. Thus, the main goal of the analyzing is to find the interesting results and show them to user.
+Analyzing of submissions is very important because a lot of results are useless, in most cases they are the same data, so it doesn't give any important information. Analyzing helps to save developer's time, it finds useful information and notifies developers or other users about that and thus anyone at any time can easily find needed information, or to see statistics of project.
 
-Analyzing of submissions is very important because a lot of results are useless, in most cases they are the same data, so it doesn't give any important information. Analyzing helps to save developer's time, it finds useful information and notifies developers or other interested people about that and thus anyone at any time can easily find needed information, or to see statistics of project.
+In the first part of the work I must learn inner architecture of ResultCloud. How it works. This help me to use better all the opportunities in design and programming that mechanism.
 
-Firstly, I must learn inner architecture of ResultCloud. How it works. This help me to use better all the opportunities in design and programming that mechanism.
-
-Next chapters describe (\textbf{Introduction in ResultCloud\ref{ch:resultcloud}}) ResultCloud system how it work and why it useful for developers, what is submission in ResultCloud, (\textbf{Analyzer Mechanism Design\ref{ch:analyzer_proposal}}) analyzer mechanism proposal and (\textbf{Analyzer Mechanism Imple\-me\-nta\-tion\ref{ch:analyzer_implement}}) implementation, (\textbf{Notification design\ref{ch:notification_proposal}}) notifications, why it is important, proposal and (\textbf{Notification mechanism implementation\ref{ch:notification_implement}}) implementation notification mechanism and (\textbf{Conclusion\ref{ch:conclusion}}) conclusion about all done work.
+Next chapters describe (\textbf{Introduction in ResultCloud\ \ref{ch:resultcloud}}) ResultCloud system how it works and why it useful for developers, what is submission in ResultCloud, (\textbf{Analyzer Mechanism Design\ \ref{ch:analyzer_proposal}}) analyzer mechanism proposal and (\textbf{Analyzer Mechanism Imple\-me\-nta\-tion\ \ref{ch:analyzer_implement}}) implementation, (\textbf{Notification design\ \ref{ch:notification_proposal}}) notifications, why it is important, proposal and (\textbf{Notification mechanism implementation\ \ref{ch:notification_implement}}) implementation notification mechanism and (\textbf{Conclusion\ \ref{ch:conclusion}}) conclusion about all done work.
 
 \chapter{Introduction in ResultCloud}
 \label{ch:resultcloud}
 
-This chapter is describe how ResultCloud work, why it is useful and all important moments for this bachelor's work, like what is submissions and how importing of new series of tests results work.
+This chapter will describe how ResultCloud works, why it is useful and all important moments for this bachelor's work, like what is submissions and how importing of new series of tests results work.
+
+\section{Testing}
+
+Tests are one of the important part of software developing. Tests helps to developers find errors and fais in software. Many softwares has long developing proccess, this softwares demand an extensive series of tests. Series of tests is a file of test cases, it must test application or part of application.
+
+Filip Matys in his bachelor's work use tool SystemTap for describe long-term tests. SystemTap has his own scripting language \emph{stap}. SystemTap use for testing Linux kernel. SystemTap's series of tests is executed by tests interface DejaGnu. Series of tests can be consists more than one scripting files. SystemTap after running series of tests write output to text file.  
 
 \section{What is ResultCloud}
 
-As I wrote in introduction, ResultCloud is a system for management of long-term testing results. This means that ResultCloud collect testing results of some project, build diagrams based on that results, compare it, so developer can comfortable look at results or easily find the difference between them. Currently, there do not exist new, modern instruments for the collect and the presentate testing results in readable form. As written by Filip Matys: “Tools which solve that problem [3], are too old and fall behind all modern applications. One of the biggest problem of that tools is no opportunity to expand and with growing market of different mobile devices with internet connection not able to present data in responsive form.” \cite{filip} So all instruments that we have now is too old, and does not extendable. But in ResultCloud parsing and management doing by plugins. Each plugin is written for one type of testing results. For example plugin “DejaGnu summary v1.0” can parse and show only SystemTap results. Thus ResultCloud is extendable system.
+As I wrote in introduction, ResultCloud is a system for management of long-term testing results. This means that ResultCloud collect testing results of some project, build diagrams based on that results, compare it, so developer can comfortable look at results or easily find the difference between them. Currently, there do not exist new, modern instruments for the presentate testing results in readable form, because all instruments that we have now is too old, and does not extendable, as written by Filip Matys in his bachelor's work: “Tools which solve that problem [3], are too old and fall behind all modern applications. One of the biggest problem of that tools is no opportunity to expand and with growing market of different mobile devices with internet connection not able to present data in responsive form.” \cite{filip}. ResultCloud has more advantage, for example in ResultCloud parsing and management doing by plugins. Plugin is a plug-in module, that can be connected to ResultCloud in any time. Each plugin is written for one type of testing results. For example plugin “DejaGnu summary v1.0” can parse and show only SystemTap results. Thus ResultCloud is extendable system.
 
-ResultCloud useful for developing applications because it provide tools for presenting, compare and working with long-term test's results. For developers it is quite hard to look up for some information in a data bunch. But with ResultCloud developer only need to import results of tests series into ResultCloud, ResultCloud store it and then present in comfortable, readable form. For example: kernel of operation system need a lot of tests that collect into series of tests and for developer every time look for some interesting results take a lot of time, but ResultCloud store results in submissions, present it in human readable form, provide some extendet tools for search interesting results, compare two or more submissions, thus developer can easily find or look at the results.
+ResultCloud useful for developing applications because it provide tools for presenting, compare and working with long-term test's results. For developers it is quite hard to look up for some information in a data bunch. But with ResultCloud developer only need to import results of tests series into ResultCloud, ResultCloud store it and then present in comfortable, readable form. For example: kernel of operation system need a lot of tests that collect into series of tests and for developer every time look for some interesting results take a lot of time, but ResultCloud store results in submissions, and then present it like diagrams and lists of results, also provide some extendet tools for search interesting results, compare two or more submissions, thus developer can easily find or look at the results.
 
 \subsection{Internal structure}
 
-ResultCloud is a complex system. ResultCloud consist of two parts frontend and backend. Frontend is a part on the client side, compited with using of AngularJS. AngularJS is a JavaScript MVC (Model-View-Controller) framework which provide tools for building and working with web pages. In official documentation write next: "It lets you use HTML as your template language and lets you extend HTML's syntax to express your application's components clearly and succinctly. Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write. And it all happens within the browser, making it an ideal partner with any server technology"\cite{angularJS}. Angular asynchronous connecting with backend part. 
+ResultCloud is a complex system. ResultCloud consist of two parts frontend and backend. Frontend is a part on the client side, built with using of AngularJS. AngularJS is a JavaScript MVC (Model-View-Controller) framework which provide tools for building and working with web pages. In official documentation write next: "It lets you use HTML as your template language and lets you extend HTML's syntax to express your application's components clearly and succinctly. Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write. And it all happens within the browser, making it an ideal partner with any server technology"\cite{angularJS}. Angular asynchronous connecting with backend part. 
 
-\subsubsection{AngularJS}
+\subsubsection{Frontend (AngularJS)}
 
 \begin{wrapfigure}{r}{0.5\textwidth}
   \centering
@@ -37,32 +42,32 @@ ResultCloud is a complex system. ResultCloud consist of two parts frontend and b
   \label{fig:result_cloud}
 \end{wrapfigure}
 
-For cotrolling whole page AngularJS use cotrollers. Every controller has his own template, Angular automatically build page with tamplate, according to data getting from controller's scope. Controller has variable \emph{scope} that consists data for building page. AngularJS also has directives. Directives extend functionality of static HTML elements. A custom directive replace the element for which it is actived by his own template. Thus it is easy to build complicated web pages that consists more than one elements, and include external elements from other projects.
+For controlling whole page AngularJS use controllers. Controller in Angular is defined by a JavaScript constructor function that used to increase Angular scope. Every controller has his own template, Angular automatically build page with tamplate, according to data getting from controller's variable \emph{scope}. Controller has variable \emph{scope} that consists data for building page. AngularJS also has directives. Directives extend functionality of static HTML elements. A custom directive replace the element for which it is actived by his own template. Thus it is easy to build complicated web pages that consists more than one elements, and include external elements from other projects.
 
 In ResultCloud pages like login page, dashboard, project, plugin overview page and etc. use controller, but for building content using directives. Elements like submissions list, submission overview list and etc. using directives, it helps build more complicated pages, for example submission overview page using several directives, one for building list with results, one for building diagrams. 
 
 \subsubsection{Backend}
 
-Backend also dividing on the smaller part. On the top of hierarchy are Controllers. This hierarchy can be seen in image\ref{fig:result_cloud}. Angular connect directly with controllers. Controllers has only one mission, to get request and parsed data and give it to Services. Services are very important part, they get data and use different database entities, other services, plugins for returning result to the controller, which return it to client.
+Backend also dividing on the smaller part. On the top of hierarchy are Controllers. This hierarchy can be seen in image\ref{fig:result_cloud}. Angular connect directly with controllers. Controllers are PHP classes. Controllers has only one mission, to get request and parsed data and give it to Services. Services are very important part, they get data and use different database entities, other services, plugins for returning result to the controller, which return it to client.
 
-For connecting with database there is exist a Driver that connected to database, and use data access object (DAO). DAO consists all basic methods for working with database. Every entity must have DAO, which inherit basic DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps to work easier with entities.
+For connecting with database there is exist a \texttt{DatabaseDriver} that connected to database, and use data access object (DAO). DAO consists all basic methods for working with database. Every entity must have DAO, which inherit basic DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps to work easier with entities.
 
 
 \subsection{Components}
 
-All ResultCloud capabilities like submission overview, project overview and etc. are components, it means that they has their own settings and should be installed manually. Each component has his own configuration file in which defined component's ID, which plugins component support and other. Component system make possible to easily extend ResultCloud. But components can not save data or change it, components only prepare and vizualize data. Every component has his own frontend and backend part. Backend part is a file \emph{CBuilder} with \texttt{CBuilder} class, method \emph{Get} prepare data and return them. Frontend is a directive that get prepared data and vizualize them.   
+All ResultCloud capabilities like submission overview, project overview and etc. are components, it means that they have their own settings and should be installed manually. Each component has his own configuration file in which defined component's ID, which plugins component support and other. Component system make possible to easily extend ResultCloud. But components can not save data or change it, components only prepare and vizualize data. Every component has his own frontend and backend part. Backend part is a file \emph{CBuilder} with \texttt{CBuilder} class, method \emph{Get} prepare data and return them. Frontend is a directive that get prepared data and vizualize them.   
 
 \subsection{Utilities}
 
 ResultCloud has utilities, the most important utilities that was used in this bachelor's work, described here:
 
-\textbf{LINQ} -- idea of this utility was get from C\# and rewrite to PHP. \texttt{LINQ} is a class for working with arrays, it has a lot of methods getting array elements, filtering array elements and doing other operations with arrays that can not do default PHP functions.
+\textbf{LINQ} -- idea of this utility was get from C\# and rewritten to PHP. \texttt{LINQ} is a class for simplest working with arrays, it has a lot of methods for getting array elements, filtering array elements and doing other operations with arrays that can not do default PHP functions. In application \texttt{LINQ} wrap standard array, thus make complicated operations more readable.  
 
-\textbf{ValidationResult} -- this is used for getting additional validation metadata. Many methods in ResultCloud using \texttt{ValidationResult}. If useful because it helps better discover errors. \texttt{ValidationResult} has attribute \emph{Data} which contain data that would be return to caller method, attribute \emph{IsValid} which contain validation state and attribute \emph{Errors} which contain array of strings that describe occurred errors.
+\textbf{ValidationResult} -- this tool was created for data validation, it wrap validate object and enable to validate it. Many methods in ResultCloud using \texttt{ValidationResult}. \texttt{ValidationResult} has attribute \emph{Data} which contain validate data, attribute \emph{IsValid} which contain validation state and attribute \emph{Errors} which contain array of strings that describe occurred errors.
 
 \subsection{Data store organization}
 
-Data organization in ResultCloud is represent in Plugins. Plugin is a system for parse and save specific formated test's results. In the past plugins has all demanded for self-installation, parsing and vizualization data, now vizualization is shared. 
+Data organization in ResultCloud is represent in Plugins. Plugin parse and save specific formated test's results. In the past plugins has all demanded for self-installation, parsing and vizualization data, now vizualization is shared. 
 Each plugin has own implementation of Parser to parse input data, and save it in a Project, Submission, etc. Hierarchy of shared entities is following: Projects  contains Submissions, Submissions is a results of a single series of tests, which also divide to Categories, Categories are divided to TestCases, and TestCases to Results.
 
 In this bachelor's work I will analyse Submissions, their Results, and other stuff that may be interesting for people.
@@ -71,7 +76,9 @@ In this bachelor's work I will analyse Submissions, their Results, and other stu
 
 As I wrote behind, the submission is a results of single series of tests. The smallest part of every submission is Result. This part contains result of a single test from series of tests. All other parts like Categories, TestCases are only organization unit. 
 
-There are two ways to import a new Submission: first is from a web page, second is using an API. Then include plugin for parse submission file. Every plugin has a class \texttt{Parser}, for parsing files and putting them into Database (DB). When client send file to \texttt{ImportController} or to \texttt{import} class, it call \texttt{ImportService}, which find demanded plugin in DB, then include plugin's class \texttt{Parser} and call method \emph{ParseImport}. Parser returns to \texttt{ImportService} \texttt{SubmissionTSE} object, which consists all parsed data as TSE objects. \texttt{ImportService} than save it to DB and return successful result to Controller or API class.
+There are two ways to import a new Submission: first is through the web page, second is using an API. For import in first way need to sign in like a user in ResultCloud and go to import page, fill all fields and press import button, then Angular send request with file to \texttt{ImportController}. To import in second way need sign in through ResultCloud API and send file with other parameters by POST request to \texttt{import} class. 
+
+Every plugin has a class \texttt{Parser}, for parsing files and putting them into Database (DB). When client send file to \texttt{ImportController} or to \texttt{import} class, it call \texttt{ImportService}, which find demanded plugin in DB, then include plugin's class \texttt{Parser} and call method \emph{ParseImport}. Parser returns to \texttt{ImportService} \texttt{SubmissionTSE} object, which consists all parsed data as TSE objects. \texttt{ImportService} than save it to DB and return successful result to Controller or API class.
 
 \chapter{Analyzer Mechanism Design}
 \label{ch:analyzer_proposal}
@@ -242,6 +249,10 @@ Image\ref{fig:temp_res} presenting how it actually look.
 
 \texttt{CBuilder} class for \texttt{analyzeOverview} get \texttt{stdClass} object with attribute \emph{Submission} - submission ID. And call \texttt{AnalyzeController} method \emph{VisualizeBySubmission}. \emph{VisualizeBySubmission} get submission ID, for each analyzer get last inserted result, and give it to analyzer's method \emph{VisualizeSingle}, which parse results and return it like array. Then \emph{VisualizeBySubmission} put vizualization data together into associative array the key analyzer ID and value analyze results, and return it.
 
+\section{Evaluation}
+
+During making bachelor's work was implemented analysis mechanism: \texttt{AnalyzerController} and two analyzers. All stuffs that was described in this chapter was implemented and functioning. Also mechanism are extendable, thus there is no problem to add new analyzers or new methods to it. Analysis results can be displayed in any format (list, diagram and etc.).
+
 \chapter{Notification design}
 \label{ch:notification_proposal}
 
@@ -357,9 +368,32 @@ const NOTIFIER_PUBLIC = false;
 
 \subsection{RSS}
 
-\texttt{RSS} is a public notifier that create or update \emph{rss.xml} file in root folder. \emph{rss.xml} present one news for each project, if \texttt{RSS} get news for already existing in \emph{rss.xml} project, it update news, otherwise it just create new one.
+\texttt{RSS} is a public notifier that create or update \emph{rss.xml} file in root folder. \emph{rss.xml} present one news for each project, if \texttt{RSS} get news for already existing in \emph{rss.xml} project, it update news, otherwise it just create new one. Current actual version of RSS is 2.0, according to specification \cite{rss} second version is simplier than first.
 
-\texttt{RSS} work with RSS by using \texttt{SimpleXML} that is default in mostly PHP versions.
+\texttt{RSS} work with RSS by using \texttt{SimpleXML} that is default in mostly PHP versions. Here RSS example:
+\begin{alltt}
+<?xml version="1.0"?>
+<rss version="2.0"> 
+<channel>
+<title>ResultCloud News</title>
+<link>http://result-cloud.org/</link>
+<description>ResultCloud analysing results</description>
+<language>en-us</language>
+<docs>http://result-cloud.org/rss.xml</docs>
+<item>
+<title>Project TestProject has new interesting submission</title>
+<description>Submission with id 22 has interesting results according to [analyzer1] analyzers, for more information go there http://corly.local/#/project/1/analyze/22</description>
+<link>http://corly.local/#/project/1/analyze/22</link></item>
+</channel>
+</rss>
+
+\end{alltt}
+
+\section{Evaluation}
+
+Notification mechanism support adding new notifiers (if notifier was implemented like it was described in this chapter) and extending settings. \texttt{NotificationController} and three type of notifiers was implemented. One of notifiers is private email notifier. Other two notifiers are public.
+
+During testing was found two problems: email sending on my computer get a lot of time, Twitter do not allow to send two twits with the same content. First problem is a local and related with software on my computer. Second problem is actual only when debuging, because in production content always will be different, in production current ID value for table never be discard, thus url in twit always be unique. 
 
 \chapter{Conclusion}
 \label{ch:conclusion}
