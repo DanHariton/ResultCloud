@@ -15,7 +15,7 @@ Next chapters describe (\textbf{Introduction in ResultCloud\ \ref{ch:resultcloud
 \chapter{Introduction in ResultCloud}
 \label{ch:resultcloud}
 
-This chapter will describe how ResultCloud works, why it is useful and all important moments for this bachelor's work, like what is submissions and how importing of new series of tests results work.
+This chapter will describe what is software tests, how ResultCloud works, why it is useful and all important moments for this bachelor's work, like what is submissions and how importing of new series of tests results work.
 
 \section{Testing}
 
@@ -68,7 +68,7 @@ ResultCloud has utilities, the most important utilities that was used in this ba
 \subsection{Data store organization}
 
 Data organization in ResultCloud is represented in Plugins. Plugin parse and save specific formated test's results. In the past plugins has all demanded for self-installation, parsing and vizualization data, now vizualization is shared. 
-Each plugin has own implementation of Parser to parse input data, and save it in a Project, Submission, etc. Hierarchy of shared entities is following: Projects  contains Submissions, Submissions is a results of a single series of tests, which are also divided to Categories, Categories are divided to TestCases, and TestCases to Results.
+Each plugin has own implementation of Parser to parse input data, and save it in a Project, Submission, etc. Submissions of the same software are grouped to \textbf{Project}. In submission, data orginized to \textbf{categories}. If file with tests results has no categories, ResultCloud create "Default" category. Categories are also divided to \textbf{TestCases}. TestCases contain \textbf{Results}.
 
 In this bachelor's work I will analyse Submissions, their Results, and other stuff that may be interesting for people.
 
@@ -83,7 +83,7 @@ Every plugin has a class \texttt{Parser}, for parsing files and putting them int
 \chapter{Analyzer Mechanism Design}
 \label{ch:analyzer_proposal}
 
-All analyzers must somehow unite into one working system. There is must be a mechanism for that. Mechanism must not be complicated and easy for extend. Thus it must easy to control all analyzers and work with their results. This chapter will describe proposals on how impelement analysis mechanism better.
+All analyzers must somehow unite into one working system. There must be a mechanism for that. Mechanism must not be complicated and easy for extend. Thus it must easy to control all analyzers and work with their results. This chapter will describe proposals on how impelement analysis mechanism better.
 
 \section{Architecture} 
 
@@ -119,7 +119,7 @@ As can be seen in the image \ref{fig:an_struct}, \texttt{AnalyzerController} is 
 
 \section{Analyzers}
 
-This section is describe design of Analyzers by itself and how it connected with analyzer controller.
+This section will describe design of Analyzers by itself and how it connected with analyzer controller.
 
 \subsection{Analyzer design}
 
@@ -156,7 +156,7 @@ Next step is propose some kind's of analyzers. Here are analyzers whose results 
 \chapter{Analyzer Mechanism Implementation}
 \label{ch:analyzer_implement}
 
-This chapter will describe mechanism's implementation. Mechanism implemented in PHP and JS, because that languages was used for implementation ResultCloud.
+This chapter will describe mechanism's implementation. Mechanism implemented in PHP and JavaScript, because that languages was used for implementation ResultCloud. Mechanism would be implemented according proposals in previous chapter.
 
 \section{Structure}
 
@@ -256,7 +256,7 @@ During making bachelor's work was implemented analysis mechanism: \texttt{Analyz
 \chapter{Notification design}
 \label{ch:notification_proposal}
 
-Notification mechanism must be flexible, and easy to extend. This chapter contains proposals for implementing notification mechanism.
+Notification mechanism must be flexible, and easy to extend. This chapter contains proposals for implementing notification mechanism. Here will consider mechanism's architectures, how implement notifiers better and notifications settings. 
 
 \section{Architecture}
 
@@ -278,7 +278,7 @@ ResultCloud provides good tools for working with settings, like entities \texttt
 
 \subsection{Notifiers architecture}
 
-Every \texttt{Notifier} must have unique identifier(ID) for correct processing, by that ID \texttt{Notification\-Controller} would identify notifiers, and it would have reference to notifier by this ID in settings template. \texttt{Notifier} must have one method for notification, and one method with settings. Each notifier has the same settings, thus that method can be picked out into some basic class, which would be inherited by notifiers classes. \texttt{Notifier} must have attribute that identifies it is like private or public notifier.
+Every \texttt{Notifier} must have unique identifier(ID) for correct processing, by that ID \texttt{Notifica\-tion\-Controller} would identify notifiers, and it would have reference to notifier by this ID in settings template. \texttt{Notifier} must have one method for notification, and one method with settings. Each notifier has the same settings, thus that method can be picked out into some basic class, which would be inherited by notifiers classes. \texttt{Notifier} must have attribute that identifies it is like private or public notifier.
 
 As a notify method in \texttt{NotificationController}, notify method in \texttt{Notifier} get the same parameters, except address, address is not associative array, but it is a simple array with addresses supported in that notifier. 
 
@@ -382,7 +382,7 @@ const NOTIFIER_PUBLIC = false;
 <docs>http://result-cloud.org/rss.xml</docs>
 <item>
 <title>Project TestProject has new interesting submission</title>
-<description>Submission with id 22 has interesting results according to [analyzer1] analyzers, for more information go there http://corly.local/#/project/1/analyze/22</description>
+<description>Submission with id 22 has interesting results according\\ to [analyzer1] analyzers, for more information go there\\ http://corly.local/#/project/1/analyze/22</description>
 <link>http://corly.local/#/project/1/analyze/22</link></item>
 </channel>
 </rss>

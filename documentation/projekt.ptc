@@ -35,7 +35,7 @@
 \contentsline {section}{\numberline {5.4}Notifier}{17}{section.5.4}
 \contentsline {subsection}{\numberline {5.4.1}Notifiers architecture}{17}{subsection.5.4.1}
 \contentsline {subsection}{\numberline {5.4.2}Notifier types}{17}{subsection.5.4.2}
-\contentsline {chapter}{\numberline {6}Notification mechanism implementation}{18}{chapter.6}
+\contentsline {chapter}{\numberline {6}Implementation of notification mechanism}{18}{chapter.6}
 \contentsline {section}{\numberline {6.1}Structure}{18}{section.6.1}
 \contentsline {section}{\numberline {6.2}Settings}{18}{section.6.2}
 \contentsline {section}{\numberline {6.3}Notification}{19}{section.6.3}
