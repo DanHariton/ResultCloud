@@ -15,13 +15,13 @@ Next chapters describe (\textbf{Introduction in ResultCloud\ \ref{ch:resultcloud
 \chapter{Introduction in ResultCloud}
 \label{ch:resultcloud}
 
-This chapter will describe what is software tests, how ResultCloud works, why it is useful and all important moments for this bachelor's work, like what is submissions and how importing of new series of tests results work.
+This chapter will describe what is software tests, how ResultCloud works, why it is useful and all important moments for this bachelor's work, like what is submissions and how import of new series of tests results work.
 
 \section{Testing}
 
 Tests are one of the important part of software developing. Tests helps to developers find errors and fais in software. Many softwares has long developing proccess, this softwares demand an extensive series of tests. Series of tests is a file of test cases, it must test application or part of application.
 
-Filip Matys in his bachelor's work use tool SystemTap for describe long-term tests. SystemTap has his own scripting language \emph{stap}. SystemTap use for testing Linux kernel. SystemTap's series of tests is executed by tests interface DejaGnu. Series of tests can be consists more than one scripting files. SystemTap after running series of tests write output to text file.  
+Filip Matys in his bachelor's work use tool SystemTap for describe long-term tests. SystemTap has his own scripting language \emph{stap}. SystemTap use for test Linux kernel. SystemTap's series of tests is executed by tests interface DejaGnu. Series of tests can be consists more than one scripting files. SystemTap after running series of tests write output to text file.  
 
 \section{What is ResultCloud}
 
@@ -31,7 +31,7 @@ ResultCloud is useful for developing applications because it provides tools for 
 
 \subsection{Internal structure}
 
-ResultCloud is a complex system. ResultCloud consists of two parts; frontend and backend. Frontend is a part on the client side, built with using of AngularJS. AngularJS is a JavaScript MVC (Model-View-Controller) framework which provides tools for building and working with web pages. In official documentation write next: "It lets you use HTML as your template language and lets you extend HTML's syntax to express your application's components clearly and succinctly. Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write. And it all happens within the browser, making it an ideal partner with any server technology"\cite{angularJS}. Angular asynchronous connecting with backend part. 
+ResultCloud is a complex system. ResultCloud consists of two parts; frontend and backend. Frontend is a part on the client side, built with using of AngularJS. AngularJS is a JavaScript MVC (Model-View-Controller) framework which provides tools for build and work with web pages. In official documentation write next: "It lets you use HTML as your template language and lets you extend HTML's syntax to express your application's components clearly and succinctly. Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write. And it all happens within the browser, making it an ideal partner with any server technology"\cite{angularJS}. Angular asynchronous connect with backend part. 
 
 \subsubsection{Frontend (AngularJS)}
 
@@ -42,15 +42,15 @@ ResultCloud is a complex system. ResultCloud consists of two parts; frontend and
   \label{fig:result_cloud}
 \end{wrapfigure}
 
-For controlling whole page AngularJS uses controllers. Controller in Angular is defined by a JavaScript constructor function that used to increase Angular scope. Every controller has his own template, Angular automatically builds pages with template, according to data getting from controller's variable \emph{scope}. Controller has variable \emph{scope} that contains data for build page. AngularJS also has directives. Directives extend functionality of static HTML elements. A custom directive replaces the element for which it is actived by his own template. Thus it is easy to build complicated web pages that consists of more than one elements, and include external elements from other projects.
+For control whole page AngularJS uses controllers. Controller in Angular is defined by a JavaScript constructor function that used to increase Angular scope. Every controller has his own template, Angular automatically builds pages with template, according to data getting from controller's variable \emph{scope}. Controller has variable \emph{scope} that contains data for build page. AngularJS also has directives. Directives extend functionality of static HTML elements. A custom directive replaces the element for which it is actived by his own template. Thus it is easy to build complicated web pages that consists of more than one elements, and include external elements from other projects.
 
-In ResultCloud, pages like login page, dashboard, project, plugin overview page and etc. use controller, but for building content using directives. Elements like submissions list, submission overview list and etc. using directives, it helps build more complicated pages, for example submission overview page using several directives, one for building list with results, one for building diagrams. 
+In ResultCloud, pages like login page, dashboard, project, plugin overview page and etc. use controller, but for build content use directives. Elements like submissions list, submission overview list and etc. using directives, it helps build more complicated pages, for example submission overview page use several directives, one for building list with results, one for building diagrams. 
 
 \subsubsection{Backend}
 
 Backend is also divideed on the smaller part. Controllers are on the top of hierarchy. This hierarchy can be seen in image\ \ref{fig:result_cloud}. Angular connect directly with controllers. Controllers are PHP classes. Controllers has only one mission, to get request and parsed data and give it to Services. Services are very important part, they get data and use different database entities, other services, plugins for returning result to the controller, which returns it to client.
 
-For connecting with database there is exists a \texttt{DatabaseDriver} that connected to database, and use data access object (DAO). DAO contains all basic methods for working with database. Every entity must have DAO, which inherit basic DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps to work easier with entities.
+For connecting with database there is exists a \texttt{DatabaseDriver} that connected to database, and use data access object (DAO). DAO contains all basic methods for work with database. Every entity must have DAO, which inherit basic DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps to work easier with entities.
 
 
 \subsection{Components}
@@ -100,7 +100,7 @@ I choose first method, because difference in speed beetwen them would be to smal
 
 \section{AnalyzerController}
 
-\texttt{AnalyzerController} would get all existed analyzers and use them. Mechanism also would provide entity for saving analysis data. Analyzer can't work with DB, because in practice it is normal to divide work between separated modules, thus analyzer only analyze input data and visualize it. Centralized method is good for that case because user don't need to load demanded analyzers and work with DB, all this operations do \texttt{AnalyzerController}.
+\texttt{AnalyzerController} would get all existed analyzers and use them. Mechanism also would provide entity for saving analysis data. Analyzer can not work with DB, because in practice it is normal to divide work between separated modules, thus analyzer only analyze input data and visualize it. Centralized method is good for that case because user don't need to load demanded analyzers and work with DB, all this operations do \texttt{AnalyzerController}.
 
 \section{Analyzer entity}
 
@@ -125,7 +125,7 @@ This section will describe design of Analyzers by itself and how it connected wi
 
 For correct connecting with analyzer controller, analyzer must has a static constant attribute with unique machine ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same for all Analyzer classes) and two methods for vizulizating data (Visualize, VisualizeSingle). Vizualizating methods will get data from \texttt{AnalyzerController} which get it from DB and return it in JSON format.
 
-Method for processing data gets in parameters: array of submissions, new submission and plugin name. It must returns \texttt{ValidationResult} object, with string in Data attribute, or array of strings if it has a few results, or it can returns empty result, with null in Data attribute.
+Method for process data gets in parameters: array of submissions, new submission and plugin name. It must returns \texttt{ValidationResult} object, with string in Data attribute, or array of strings if it has a few results, or it can returns empty result, with null in Data attribute.
 
 Also analyzer has an attribute called \emph{is\_interesting} which contains status of previous analysis, and if analysis results is interesting it return true, in another case false, it need to notifying only about interesting submissions.
 
@@ -138,13 +138,13 @@ Also analyzer has an attribute called \emph{is\_interesting} which contains stat
 
 \subsection{Analyzer vizualisation}
 
-Every submission has his own analysis results, those results would be presented in personal page. Image\ \ref{fig:temp} show that every analyzer has some space on that page. Because different analyzers use different methods for vizualization, there is need to specificate different possibilites to vizualize information. As mentioned in chapter \ref{ch:resultcloud} ResultCloud uses AngularJS for vizualizating data and templates, so every analyzer must have his own template and AngularJS  directive. Image shows layout of analysis results.
+Every submission has his own analysis results, those results would be presented in personal page. Image\ \ref{fig:temp} show that every analyzer has some space on that page. Because different analyzers use different methods for vizualization, there is need to specificate different possibilites to vizualize information. As mentioned in chapter \ref{ch:resultcloud} ResultCloud uses AngularJS for vizualize data and templates, so every analyzer must have his own template and AngularJS  directive. Image shows layout of analysis results.
 
 \subsection{Kinds of Analyzer}
 
 Next step is propose some kind's of analyzers. Here are analyzers whose results would be interesting for programmers.
 \begin{itemize} 
-\item \emph{Find strange changes like if result has a long time the same value and than it change}, it would be interesting because a lot of test cases has long time same result, so most of time it is just useless information, but changing is interesting and useful for developer.
+\item \emph{Find strange changes like if result has a long time the same value and than it change}, it would be interesting because a lot of test cases has long time same result, so most of time it is just useless information, but changes is interesting and useful for developer.
 \item \emph{Check a changes in tests, like if some test which is contained in all previous submissions dissapear}, it would be interesting and useful because changes in test cases by itself.
 \item \emph{Check if some test had a long sequence of some bad value like FAIL or ERROR and then take a PASS, but after take FAIL or ERROR again}, it would be interesing because using this information can help developer to find why test always failing.
 \item \emph{Check changes from UNTESTED to some result}, it would be interesting because unused test case started to be in use.
@@ -156,7 +156,7 @@ Next step is propose some kind's of analyzers. Here are analyzers whose results 
 \chapter{Analyzer Mechanism Implementation}
 \label{ch:analyzer_implement}
 
-This chapter will describe mechanism's implementation. Mechanism implemented in PHP and JavaScript, because that languages was used for implementation ResultCloud. Mechanism would be implemented according proposals in previous chapter.
+This chapter will describe mechanism's implementation. Mechanism implemented in PHP and JavaScript, because that languages was used for implementation ResultCloud. Mechanism would be implemented according to proposals in previous chapter.
 
 \section{Structure}
 
@@ -166,7 +166,7 @@ Analyzing starts only after new submission would be inserted into DB, in \texttt
 
 \section{Entity}
 
-\emph{Analyzer} entity was converted into ResultCloud acceptable format. As a result, three classes were created: \texttt{AnalyzerDao}, \texttt{AnalyzerTSE}, \texttt{AnalyzerService} and edited table installation class. \texttt{AnalyzerDao} class for working with \emph{Analyzer} table. \texttt{AnalyzerTSE} class is for easily work with \texttt{AnalyzerDao} returned data. \texttt{AnalyzerService} class is for different and more complicated operations with data.
+\emph{Analyzer} entity was converted into ResultCloud acceptable format. As a result, three classes were created: \texttt{AnalyzerDao}, \texttt{AnalyzerTSE}, \texttt{AnalyzerService} and edited table installation class. \texttt{AnalyzerDao} class for work with \emph{Analyzer} table. \texttt{AnalyzerTSE} class is for easily work with \texttt{AnalyzerDao} returned data. \texttt{AnalyzerService} class is for different and more complicated operations with data.
 
 \section{Analyzing}
 
@@ -179,7 +179,7 @@ Analyzing starts only after new submission would be inserted into DB, in \texttt
 
 \subsection{AnalyzeController}
 
-\texttt{AnalyzeController} is a kernel of whole analyze mechanism. \texttt{AnalyzeController} is implemented like static class (but PHP does not support static classes, thus all methods are static), because creates more than one class object unnecessarily. Image\ \ref{fig:an_impl} describe good how whole mechanism is implemented. \texttt{AnalyzerController} connecting with analyzers, and through \texttt{AnalyzeService} writes data to DB and get it from DB.
+\texttt{AnalyzeController} is a kernel of whole analyze mechanism. \texttt{AnalyzeController} is implemented like static class (but PHP does not support static classes, thus all methods are static), because creates more than one class object unnecessarily. Image\ \ref{fig:an_impl} describe good how whole mechanism is implemented. \texttt{AnalyzerController} connect with analyzers, and through \texttt{AnalyzeService} writes data to DB and get it from DB.
 
 When \texttt{AnalyzeController} be included, it executes \emph{InitAnalyzers} method, that scan \emph{analyzers} folder, puts all available analyzers together and save it to \emph{\textdollar{AnalyzerList}} attribute. Method \emph{GetAnalyzersList} will return \texttt{LINQ} object with \emph{\textdollar{AnalyzerList}}.
 
@@ -219,7 +219,7 @@ Each analyzer must has method \emph{analyze}, which analyzing input submissions 
 
 \section{Vizualization}
 
-As was mentioned in chapter \ref{ch:resultcloud} ResultCloud use AngularJS for vizualization data. AngularJS is JavaScript MVC (Model-View-Controller) framework, every page has own controller, thus analyzer page must has it too. \texttt{AnalyzeController.js} is a file that contains controller for analysis result page. \emph{analyze.html} is a page template. Some of the page, that contain several sort of data, builded with the simplest part \emph{Components}, each component has individual settings, and individual Angular \texttt{directory}. Each component has \texttt{backend}, \texttt{frontend} folder and configuration file \emph{config.xml} with all settings and supported plugins. Backend folder consists \texttt{CBuilder} class, which return prepared data for presenting. 
+As was mentioned in chapter \ref{ch:resultcloud} ResultCloud use AngularJS for vizualization data. AngularJS is JavaScript MVC (Model-View-Controller) framework, every page has own controller, thus analyzer page must has it too. \texttt{AnalyzeController.js} is a file that contains controller for analysis result page. \emph{analyze.html} is a page template. Some of the page, that contain several sort of data, builded with the simplest part \emph{Components}, each component has individual settings, and individual Angular \texttt{directory}. Each component has \texttt{backend}, \texttt{frontend} folder and configuration file \emph{config.xml} with all settings and supported plugins. Backend folder consists \texttt{CBuilder} class, which return prepared data for representation. 
 
 \begin{figure}
   \centering
@@ -228,7 +228,7 @@ As was mentioned in chapter \ref{ch:resultcloud} ResultCloud use AngularJS for v
   \label{fig:temp_res}
 \end{figure}
 
-Analyzer page would use only one component \texttt{analyzeOverview}.It wouldn't have any settings, and will support all plugins. Angular directory firstly get array of analyzing results for current submission, than for each analyzer find own Angular directory, which put analyzer data to template and present it. There some interesting part of code, how implemented inserting analyzers directive into \texttt{analyzeOverview} component template:
+Analyzer page would use only one component \texttt{analyzeOverview}.It wouldn't have any settings, and will support all plugins. Angular directory firstly get array of analyzing results for current submission, than for each analyzer find own Angular directory, which put analyzer data to template and represent it. There some interesting part of code, how implemented inserting analyzers directive into \texttt{analyzeOverview} component template:
 \begin{alltt}
 $scope.buildAnalyzerView = function (key) \{
 	\textbackslash\textbackslash Check if key not empty
@@ -256,7 +256,7 @@ During making bachelor's work was implemented analysis mechanism: \texttt{Analyz
 \chapter{Notification design}
 \label{ch:notification_proposal}
 
-Notification mechanism must be flexible, and easy to extend. This chapter contains proposals for implementing notification mechanism. Here will consider mechanism's architectures, how implement notifiers better and notifications settings. 
+Notification mechanism must be flexible, and easy to extend. This chapter contains proposals for implement notification mechanism. Here will consider mechanism's architectures, how implement notifiers better and notifications settings. 
 
 \section{Architecture}
 
@@ -264,13 +264,13 @@ Like in case with Analyze Controller, I would divide notifications methods to th
 
 \section{Notification Controller}
 
-Notification controller would has method for easy controlling notifications, which get all demanded fields, as \emph{title}, \emph{body}, \emph{bodyShort} (for resources that accept only short messages), \emph{adreses} (list of all adreses that must recieve notification) and according to them send notifications. Also \texttt{NotificationController} must provides methods for getting private and public \texttt{Notifiers}. When it included, it scans space for available \texttt{Notifiers}.
+Notification controller would has method for easy control notifications, which get all demanded fields, as \emph{title}, \emph{body}, \emph{bodyShort} (for resources that accept only short messages), \emph{adreses} (list of all adreses that must recieve notification) and according to them send notifications. Also \texttt{NotificationController} must provides methods for getting private and public \texttt{Notifiers}. When it included, it scans space for available \texttt{Notifiers}.
 
 \section{Notification settings}
 
-There must be a mechanism for adding settings to \texttt{Notifier} easy, and settings must be present at user's settings without editing any template for it. But user can editing only private settings, because public notifier settings are shared with other users, ResultCloud does not support user's hierarchy, thus nobody can edit public notifier settings.
+There must be a mechanism for adding settings to \texttt{Notifier} easy, and settings must be present at user's settings without editing any template for it. But user can edit only private settings, because public notifier settings are shared with other users, ResultCloud does not support user's hierarchy, thus nobody can edit public notifier settings.
 
-ResultCloud provides good tools for working with settings, like entities \texttt{TemplateSettings} and \texttt{TemplateSettingsItem}. \texttt{TemplateSettings} is for saving setting's template information into DB, such as setting type, setting name and etc. \texttt{TemplateSettingsItem} is for saving settings value.
+ResultCloud provides good tools for work with settings, like entities \texttt{TemplateSettings} and \texttt{TemplateSettingsItem}. \texttt{TemplateSettings} is for saving setting's template information into DB, such as setting type, setting name and etc. \texttt{TemplateSettingsItem} is for save settings value.
 
 \section{Notifier}
 
@@ -304,7 +304,7 @@ Notification starts only if analyzer return interesting result.
 
 \section{Settings}
 
-Basically all notifers have same setting, this settings would enable or disable notifier's notifications. But as mentioned in previous chapter, only private notifiers can use settings. Notification mechanism does not work with settings, because list of addresses and notifiers must be assamble by those who sending, notification mechanism only takes this list and send notification. 
+Basically all notifers have same setting, this settings would enable or disable notifier's notifications. But as mentioned in previous chapter, only private notifiers can use settings. Notification mechanism does not work with settings, because list of addresses and notifiers must be assamble by those who send, notification mechanism only takes this list and send notification. 
 
 ResultCloud has tools for settings, not only in server side, but also in client side it has automatic form generation for settings. Here is example of default \emph{getSettings} method in \texttt{BaseNotifier} class, to understand how set up settings better:
 
