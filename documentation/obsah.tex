@@ -21,11 +21,11 @@ This chapter will describe what is software tests, how ResultCloud works, why it
 
 Tests are one of the important part of software developing. Tests helps to developers find errors and fais in software. Many softwares has long developing proccess, this softwares demand an extensive series of tests. Series of tests is a file of test cases, it must test application or part of application.
 
-Filip Matys in his bachelor's work use tool SystemTap for describe long-term tests. SystemTap has his own scripting language \emph{stap}. SystemTap use for test Linux kernel. SystemTap's series of tests is executed by tests interface DejaGnu. Series of tests can be consists more than one scripting files. SystemTap after running series of tests write output to text file.  
+Filip Matys use tool SystemTap for describe long-term tests in his bachelor's work. SystemTap has his own scripting language \emph{stap}. SystemTap is used for test Linux kernel. SystemTap's series of tests is executed by tests interface DejaGnu. Series of tests can consists more than one scripting files. SystemTap write output to text file after running series of tests. More information about SystemTap can be found in SysteTap wiki \cite{systemtap}.
 
 \section{What is ResultCloud}
 
-As I wrote in introduction, ResultCloud is a system for management of long-term testing results. This means that ResultCloud collects testing results of some project, build diagrams based on that results, compare it, so developer can comfortably look at results or easily find the difference between them. Currently, there do not exist new, modern instruments for the presentation of tested results in readable form, because all instruments that we have now is too old, and does not extendable, as written by Filip Matys in his bachelor's work: “Tools which solve that problem [3], are too old and fall behind all modern applications. One of the biggest problem of that tools is no opportunity to expand and with growing market of different mobile devices with internet connection not able to present data in responsive form.” \cite{filip}. ResultCloud has more advantage, for example in ResultCloud parsing and management doing by plugins. Plugin is a plug-in module, that can be connected to ResultCloud in any time. Each plugin is written for one type of testing results. For example plugin “DejaGnu summary v1.0” can parse and show only SystemTap results. Thus ResultCloud is extendable system.
+As I wrote in introduction, ResultCloud is a system for management of long-term testing results. This means that ResultCloud collects testing results of some project, build diagrams based on that results, compare it, so developer can comfortably look at results or easily find the difference between them. Currently, there do not exist new, modern instruments for the presentation of tested results in readable form, because all instruments that we have now is too old, and does not extendable, as written by Filip Matys in his bachelor's work: “Tools which solve that problem [3], are too old and fall behind all modern applications. One of the biggest problem of that tools is no opportunity to expand and with growing market of different mobile devices with internet connection not able to present data in responsive form.” \cite{filip}. ResultCloud has more advantages, for example in ResultCloud parsing and management doing by plugins. Plugin is a plug-in module, that can be connected to ResultCloud in any time. Each plugin is written for one type of testing results. For example plugin “DejaGnu summary v1.0” can parse and show only SystemTap results. Thus ResultCloud is extendable system.
 
 ResultCloud is useful for developing applications because it provides tools for present, compare and work with long-term test's results. For developers it is quite hard to look up for some information in a data bunch. But with ResultCloud developer only need to import results of tests series into ResultCloud, ResultCloud stores it and then presents it in a comfortable, readable form. For example: kernel of operation system need a lot of tests that collect into series of tests and for developer every time look for some interesting results take a lot of time, but ResultCloud store results in submissions, and then presents it like diagrams and lists of results, also provides some extendet tools for search interesting results, compares two or more submissions, thus developer can easily find or look at the results.
 
@@ -42,20 +42,20 @@ ResultCloud is a complex system. ResultCloud consists of two parts; frontend and
   \label{fig:result_cloud}
 \end{wrapfigure}
 
-For control whole page AngularJS uses controllers. Controller in Angular is defined by a JavaScript constructor function that used to increase Angular scope. Every controller has his own template, Angular automatically builds pages with template, according to data getting from controller's variable \emph{scope}. Controller has variable \emph{scope} that contains data for build page. AngularJS also has directives. Directives extend functionality of static HTML elements. A custom directive replaces the element for which it is actived by his own template. Thus it is easy to build complicated web pages that consists of more than one elements, and include external elements from other projects.
+AngularJS uses controllers for control whole page . Controller in Angular is defined by a JavaScript constructor function that used to increase Angular scope. Every controller has his own template, Angular automatically builds pages with template, according to data getting from controller's variable \emph{scope}. Controller has variable \emph{scope} that contains data for build page. AngularJS also has directives. Directives extend functionality of static HTML elements. A custom directive replaces the element for which it is actived by his own template. Thus it is easy to build complicated web pages that consists of more than one elements, and include external elements from other projects.
 
-In ResultCloud, pages like login page, dashboard, project, plugin overview page and etc. use controller, but for build content use directives. Elements like submissions list, submission overview list and etc. using directives, it helps build more complicated pages, for example submission overview page use several directives, one for building list with results, one for building diagrams. 
+In ResultCloud, pages like login page, dashboard, project, plugin overview page and etc. use controller, but directives is used for build content. Elements like submissions list, submission overview list and etc. using directives, it helps build more complicated pages, for example submission overview page use several directives, one for building list with results, one for building diagrams. 
 
 \subsubsection{Backend}
 
 Backend is also divideed on the smaller part. Controllers are on the top of hierarchy. This hierarchy can be seen in image\ \ref{fig:result_cloud}. Angular connect directly with controllers. Controllers are PHP classes. Controllers has only one mission, to get request and parsed data and give it to Services. Services are very important part, they get data and use different database entities, other services, plugins for returning result to the controller, which returns it to client.
 
-For connecting with database there is exists a \texttt{DatabaseDriver} that connected to database, and use data access object (DAO). DAO contains all basic methods for work with database. Every entity must have DAO, which inherit basic DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps to work easier with entities.
+There is exists a \texttt{DatabaseDriver} that connected to database, and use data access object (DAO). DAO contains all basic methods for work with database. Every entity must have DAO, which inherit basic DAO, and then system will work with entity through entity's DAO. Results of SELECT query converting to TSE (Test-Suite-Entity) object. TSE object helps to work easier with entities.
 
 
 \subsection{Components}
 
-All ResultCloud capabilities like submission overview, project overview and etc. are components, it means that they have their own settings and should be installed manually. Each component has his own configuration file in which defined component's ID, which plugins component support and other. Component system make possible to easily extend ResultCloud. But components can not save data or change it, components only prepare and vizualize data. Every component has his own frontend and backend part. Backend part is a file \emph{CBuilder} with \texttt{CBuilder} class, method \emph{Get} prepare data and return them. Frontend is a directive that get prepared data and vizualize them.   
+All ResultCloud capabilities are components like submission overview, project overview and etc., it means that they have their own settings and should be installed manually. Each component has his own configuration file in which defined component's ID, which plugins component support and other. Component system make possible to easily extend ResultCloud. But components can not save data or change it, components only prepare and vizualize data. Every component has his own frontend and backend part. Backend part is a file \emph{CBuilder} with \texttt{CBuilder} class, method \emph{Get} prepare data and return them. Frontend is a directive that get prepared data and vizualize them.   
 
 \subsection{Utilities}
 
@@ -67,7 +67,7 @@ ResultCloud has utilities, the most important utilities that was used in this ba
 
 \subsection{Data store organization}
 
-Data organization in ResultCloud is represented in Plugins. Plugin parse and save specific formated test's results. In the past plugins has all demanded for self-installation, parsing and vizualization data, now vizualization is shared. 
+Data organization in ResultCloud is represented in Plugins. Plugin parse and save specific formated test's results. In the past plugins had all demanded for self-installation, parsing and vizualization data, now vizualization is shared. 
 Each plugin has own implementation of Parser to parse input data, and save it in a Project, Submission, etc. Submissions of the same software are grouped to \textbf{Project}. In submission, data orginized to \textbf{categories}. If file with tests results has no categories, ResultCloud create "Default" category. Categories are also divided to \textbf{TestCases}. TestCases contain \textbf{Results}.
 
 In this bachelor's work I will analyse Submissions, their Results, and other stuff that may be interesting for people.
@@ -115,7 +115,7 @@ In the picture presents entity \emph{Analyzer} \ref{fig:entity}, which contain f
   \label{fig:an_struct}
 \end{figure}
 
-As can be seen in the image \ref{fig:an_struct}, \texttt{AnalyzerController} is center part of whole analyzer's mechanism. When application starts \texttt{AnalyzerController} finds all available analyzers, this is good for optimization. \texttt{AnalyzerController} is realize easy analyzer control. One method must run all analyzers that supports current submission's plugin, and returns result which \texttt{AnalyzerController} write to DB. Also \texttt{AnalyzerController} must consists methods for vizualizating data.
+As can be seen in the image \ref{fig:an_struct}, \texttt{AnalyzerController} is center part of whole analyzer's mechanism. \texttt{AnalyzerController} finds all available analyzers, when application starts, this is good for optimization. \texttt{AnalyzerController} is realize easy analyzer control. One method must run all analyzers that supports current submission's plugin, and returns result which \texttt{AnalyzerController} write to DB. Also \texttt{AnalyzerController} must consists methods for vizualizating data.
 
 \section{Analyzers}
 
@@ -123,7 +123,7 @@ This section will describe design of Analyzers by itself and how it connected wi
 
 \subsection{Analyzer design}
 
-For correct connecting with analyzer controller, analyzer must has a static constant attribute with unique machine ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same for all Analyzer classes) and two methods for vizulizating data (Visualize, VisualizeSingle). Vizualizating methods will get data from \texttt{AnalyzerController} which get it from DB and return it in JSON format.
+Analyzer must has a static constant attribute with unique machine ID (under it ID, analyzer would be identified in Analyze entity), method for getting and processing data (name of the method must be the same for all Analyzer classes) and two methods for vizulizating data (Visualize, VisualizeSingle), for correct connecting with analyzer controller. Vizualizating methods will get data from \texttt{AnalyzerController} which get it from DB and return it in JSON format.
 
 Method for process data gets in parameters: array of submissions, new submission and plugin name. It must returns \texttt{ValidationResult} object, with string in Data attribute, or array of strings if it has a few results, or it can returns empty result, with null in Data attribute.
 
@@ -141,6 +141,7 @@ Also analyzer has an attribute called \emph{is\_interesting} which contains stat
 Every submission has his own analysis results, those results would be presented in personal page. Image\ \ref{fig:temp} show that every analyzer has some space on that page. Because different analyzers use different methods for vizualization, there is need to specificate different possibilites to vizualize information. As mentioned in chapter \ref{ch:resultcloud} ResultCloud uses AngularJS for vizualize data and templates, so every analyzer must have his own template and AngularJS  directive. Image shows layout of analysis results.
 
 \subsection{Kinds of Analyzer}
+\label{subsec:kinds}
 
 Next step is propose some kind's of analyzers. Here are analyzers whose results would be interesting for programmers.
 \begin{itemize} 
@@ -156,7 +157,7 @@ Next step is propose some kind's of analyzers. Here are analyzers whose results 
 \chapter{Analyzer Mechanism Implementation}
 \label{ch:analyzer_implement}
 
-This chapter will describe mechanism's implementation. Mechanism implemented in PHP and JavaScript, because that languages was used for implementation ResultCloud. Mechanism would be implemented according to proposals in previous chapter.
+This chapter will describe mechanism's implementation. Mechanism is implemented in PHP and JavaScript, because that languages was used for implementation ResultCloud. Mechanism would be implemented according to proposals in previous chapter.
 
 \section{Structure}
 
@@ -249,10 +250,6 @@ Image\ref{fig:temp_res} present how it actually look.
 
 \texttt{CBuilder} class for \texttt{analyzeOverview} get \texttt{stdClass} object with attribute \emph{Submission} - submission ID. And call \texttt{AnalyzeController} method \emph{VisualizeBySubmission}. \emph{VisualizeBySubmission} get submission ID, for each analyzer get last inserted result, and give it to analyzer's method \emph{VisualizeSingle}, which parse results and return it like array. Then \emph{VisualizeBySubmission} puts vizualization data together into associative array the key analyzer ID and value analyze results, and return it.
 
-\section{Evaluation}
-
-During making bachelor's work was implemented analysis mechanism: \texttt{AnalyzerController} and two analyzers. All stuffs that was described in this chapter was implemented and functioning. Also mechanism are extendable, thus there is no problem to add new analyzers or new methods to it. Analysis results can be displayed in any format (list, diagram and etc.).
-
 \chapter{Notification design}
 \label{ch:notification_proposal}
 
@@ -260,7 +257,7 @@ Notification mechanism must be flexible, and easy to extend. This chapter contai
 
 \section{Architecture}
 
-Like in case with Analyze Controller, I would divide notifications methods to the separated classes and Notification Controller will control them. But as opposite to analyzers there are several types of notifiers. First type is public notifiers, it means that notifications would be sended into some shared or public resources, like \emph{Twitter} for example. Private is means that it notifies each user separetly. According to this private notifiers must has settings, where user can set if he want to get notifications or not, and other options.
+Like in case with Analyze Controller, notifications methods would be divide  to the separated classes and Notification Controller will control them. But as opposite to analyzers there are several types of notifiers. First type is public notifiers, it means that notifications would be sended into some shared or public resources, like \emph{Twitter} for example. Private is means that it notifies each user separetly. According to this private notifiers must has settings, where user can set if he want to get notifications or not, and other options.
 
 \section{Notification Controller}
 
@@ -283,13 +280,21 @@ Every \texttt{Notifier} must have unique identifier(ID) for correct processing, 
 As a notify method in \texttt{NotificationController}, notify method in \texttt{Notifier} get the same parameters, except address, address is not associative array, but it is a simple array with addresses supported in that notifier. 
 
 \subsection{Notifier types}
+\label{subsec:notifiers}
 
 Within the confines of this bachelour's work, must be implemented these types of notifiers:
 \begin{itemize} 
 \item Email - notifications will be sent by email, this is private notifier
 \item Twitter - notifications will be sent into prepared twitter account, public notifier
 \item RSS - notifications will be present in RSS file, public notifier
-\end{itemize}  
+\end{itemize}
+
+Next notifiers can be used for extending application:
+
+\begin{itemize} 
+\item Facebook - notifications will be present in some group in Facebook, this is public notifier
+\item Telegram - notifications will be sent by the bot in telegram to all subscribed users, public notifier
+\end{itemize}
 
 \chapter{Implementation of notification mechanism}
 \label{ch:notification_implement}
@@ -389,11 +394,20 @@ const NOTIFIER_PUBLIC = false;
 
 \end{alltt}
 
-\section{Evaluation}
+\chapter{Evaluation}
 
-Notification mechanism support adding new notifiers (if notifier was implemented like it was described in this chapter) and extending settings. \texttt{NotificationController} and three type of notifiers was implemented. One of notifiers is private email notifier. Other two notifiers are public.
+This chapter will describe what was did during bachelor's work, how it can be extended, how was solved some problems.
+
+\section{Analyzers}
+
+During making bachelor's work was implemented analysis mechanism: \texttt{AnalyzerController} and two analyzers. All stuffs that was described in this chapter was implemented and functioning. Also mechanism are extendable, thus there is no problem to add new analyzers or new methods to it. Proposals about analyzers can be found in subsection \ref{subsec:kinds}. Analysis results can be displayed in any format (list, diagram and etc.).
+
+\section{Notifications}
+
+Notification mechanism support adding new notifiers (if notifier was implemented like it was described in this chapter) and extending settings. \texttt{NotificationController} and three type of notifiers was implemented. One of notifiers is private email notifier. Other two notifiers are public. Proposals about notifiers can be found in subsection \ref{subsec:notifiers}. Also new settings can be added to notification mechanism, for example, user can choose from which analyzers he wants get notifications.
 
 During testing was found two problems: email sending on my computer get a lot of time, Twitter do not allow to send two twits with the same content. First problem is a local and related with software on my computer. Second problem is actual only when debuging, because in production content always will be different, in production current ID value for table never be discard, thus url in twit always be unique. 
+
 
 \chapter{Conclusion}
 \label{ch:conclusion}
