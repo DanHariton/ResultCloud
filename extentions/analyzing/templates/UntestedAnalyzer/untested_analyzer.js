@@ -1,8 +1,8 @@
 // analyzeOverview/frontend/analyzeOverview.js
-application.directive('analyzer1', function () {
+application.directive('untestedanalyzer', function () {
     return {
         restrict: 'E',
-        templateUrl: 'extentions/analyzing/templates/analyzer1/analyzer1.html',
+        templateUrl: 'extentions/analyzing/templates/UntestedAnalyzer/untested_analyzer.html',
         controller: function ($scope, $stateParams, ViewService, $rootScope) {
         }
     }

@@ -3,25 +3,23 @@ include_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
 
 Library::using(Library::UTILITIES);
 
-class Analyzer1
+class UntestedAnalyzer
 {
-    const ANALYZER_ID = "analyzer1";
-    const JS_CONTROLLER = "analyzer1.js";
+    const ANALYZER_ID = "UntestedAnalyzer";
+    const JS_CONTROLLER = "untested_analyzer.js";
     private $is_interesting = false;
     public function analyze(SubmissionTSE $submission, LINQ $submissionList, $plugin)
     {
         $this->is_interesting = false;
         if ($plugin == "systemtap") {
-            $good = 0;
-            $bad = 0;
-            $strange = 0;
 
             if ($submissionList->IsEmpty()) {
                 return new ValidationResult(array());
             }
             $submission1 = $submissionList->Last();
             $submission2 = $submission;
-            
+            $res = new stdClass();
+            $res->Categories = array();
             foreach ($submission1->GetCategories() as $category) {
                 $category2 = $submission2->GetCategoryByName($category->GetName());
                 if (is_null($category2)) {
@@ -32,31 +30,30 @@ class Analyzer1
                     if (is_null($testCase2)) {
                         continue;
                     }
+                    error_log("//-----------------------------------------------work!");
                     foreach ($testCase->GetResults() as $result) {
+                        
                         $result2 = $testCase2->GetResultByKey($result->GetKey());
                         if (is_null($result2)) {
                             continue;
                         }
+                        error_log($result->GetValue()." ".$result2->GetValue());
                         if ($result->GetValue() != $result2->GetValue()) {
-                            if ($result->GetValue() == "PASS" &&
-                                $result2->GetValue() == "FAIL") {
-                                $bad++;
-                            } elseif ($result->GetValue() == "FAIL" &&
-                                $result2->GetValue() == "PASS" ) {
-                                $good++;
-                            } elseif ($result->GetValue() == "FAIL" &&
-                                $result2->GetValue() == "ERROR") {
-                                $strange++;
+                            if ($result->GetValue() == "UNTESTED" &&
+                                $result2->GetValue() != "UNTESTED") {
+                                if (!isset($res->Categories[$category2->GetName()])) {
+                                    $res->Categories[$category2->GetName()] = array();
+                                }
+                                if (!isset($res->Categories[$category2->GetName()][$testCase2->GetName()])) {
+                                    $res->Categories[$category2->GetName()][$testCase2->GetName()] = array();
+                                }
+                                $res->Categories[$category2->GetName()][$testCase2->GetName()][$result->GetKey()] = $result2->GetValue();
                             }
                         }
                     }
                 }
             }
-            $res = new stdClass();
-            $res->Good = $good;
-            $res->Bad = $bad;
-            $res->Strange = $strange;
-            if ($good || $bad || $strange) {
+            if (count($res->Categories)) {
                 $this->is_interesting = true;
             }
             $validation = new ValidationResult(array(json_encode($res)));
