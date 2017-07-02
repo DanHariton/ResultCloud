@@ -12,7 +12,7 @@ class BaseNotifier
         $settingsItem['label'] = "Get notifications by this way";
         $settingsItem['identifier'] = "get-notify";
         $settingsItem['default'] = "1";
-        $settingsItem['type'] = TemplateSettingsItemType::RADIOBOX;
+        $settingsItem['type'] = TemplateSettingsItemType::CHECKBOX;
         $settingsItem['required'] = 'true';
         $settings[] = $settingsItem;
 

@@ -1,0 +1,219 @@
+%============================================================================
+% tento soubor pouzijte jako zaklad
+% (c) 2008 Michal Bidlo
+% E-mail: bidlom AT fit vutbr cz
+%============================================================================
+% kodovaní: UTF-8 (zmena prikazem iconv, recode nebo cstocs)
+%----------------------------------------------------------------------------
+% zpracování: make, make pdf, make desky, make clean
+%============================================================================
+% Šablonu upravil: Ing. Jaroslav Dytrych, idytrych@fit.vutbr.cz
+%============================================================================
+% \documentclass[]{fitthesis} % bez zadání - pro začátek práce, aby nebyl problém s překladem
+% \documentclass[zadani]{fitthesis} % odevzdani do wisu - odkazy jsou barevné
+%\documentclass[zadani,print]{fitthesis} % pro tisk - odkazy jsou černé
+%\documentclass[english,print]{fitthesis} % pro tisk - odkazy jsou černé
+% * Je-li prace psana v anglickem jazyce, je zapotrebi u tridy pouzit 
+%   parametr english nasledovne:
+\documentclass[english]{fitthesis}
+% * Je-li prace psana ve slovenskem jazyce, je zapotrebi u tridy pouzit 
+%   parametr slovak nasledovne:
+%      \documentclass[slovak]{fitthesis}
+
+\usepackage[czech,slovak,english]{babel}
+\usepackage[utf8]{inputenc} %kodovani
+\usepackage[T1]{fontenc}
+\usepackage{cmap}
+\usepackage{url}
+\usepackage{alltt}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{subfig}
+% \usepackage{natbib}
+% \usepackage[backend=bibtex]{biblatex}
+\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
+
+%zde muzeme vlozit vlastni balicky
+\usepackage{listings}
+\usepackage[toc,page,header]{appendix}
+\RequirePackage{titletoc}
+\ifczech
+  \usepackage{ae}
+\fi
+
+\input{pisma.tex}
+
+% vypne funkci nové šablony, která automaticky nahrazuje uvozovky,
+% aby nebyly prováděny nevhodné náhrady v popisech API apod.
+\csdoublequotesoff
+
+% =======================================================================
+% balíček "hyperref" vytváří klikací odkazy v pdf, pokud tedy použijeme pdflatex
+% problém je, že balíček hyperref musí být uveden jako poslední, takže nemůže
+% být v šabloně
+\ifWis
+\ifx\pdfoutput\undefined % nejedeme pod pdflatexem
+\else
+  \usepackage{color}
+  \usepackage[unicode,colorlinks,hyperindex,plainpages=false,pdftex]{hyperref}
+  \definecolor{links}{rgb}{0.4,0.5,0}
+  \definecolor{anchors}{rgb}{1,0,0}
+  \def\AnchorColor{anchors}
+  \def\LinkColor{links}
+  \def\pdfBorderAttrs{/Border [0 0 0] }  % bez okrajů kolem odkazů
+  \pdfcompresslevel=9
+\fi
+\else % pro tisk budou odkazy, na které se dá klikat, černé
+\ifx\pdfoutput\undefined % nejedeme pod pdflatexem
+\else
+  \usepackage{color}
+  \usepackage[unicode,colorlinks,hyperindex,plainpages=false,pdftex,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
+  \definecolor{links}{rgb}{0,0,0}
+  \definecolor{anchors}{rgb}{0,0,0}
+  \def\AnchorColor{anchors}
+  \def\LinkColor{links}
+  \def\pdfBorderAttrs{/Border [0 0 0] } % bez okrajů kolem odkazů
+  \pdfcompresslevel=9
+\fi
+\fi
+
+%Informace o praci/projektu
+%---------------------------------------------------------------------------
+\projectinfo{
+  %Prace
+  project=BP,            %typ prace BP/SP/DP/DR
+  year=2016,             %rok
+  date={May 18, 2016},           %datum odevzdani
+  %Nazev prace
+  title.cs={Analýza a oznámení o nových ResultCloud výsledcích},  %nazev prace v cestine
+  title.en={Analysis and Notification of New ResultCloud Submissions}, %nazev prace v anglictine
+  %Autor
+  author={Bohdan Iakymets},   %jmeno prijmeni autora
+  author.name={Bohdan},   %jmeno autora (pro citaci)
+  author.surname={Iakymets},   %prijmeni autora (pro citaci)
+  %author.title.p=Bc., %titul pred jmenem (nepovinne)
+  %author.title.a=PhD, %titul za jmenem (nepovinne)
+  %Ustav
+  department=UPGM, % doplnte prislusnou zkratku dle ustavu na zadani: UPSY/UIFS/UITS/UPGM
+  %Skolitel
+  supervisor=Hana Pluháčková, %cele jmeno a prijmeni skolitele
+  supervisor.name={Hana},   %jmeno skolitele (pro citaci)
+  supervisor.surname={Pluháčková},   %prijmeni skolitele (pro citaci)
+  supervisor.title.p=Mgr. Bc.,   %titul pred jmenem (nepovinne)
+  % supervisor.title.a={Ph.D.},    %titul za jmenem (nepovinne)
+  %Klicova slova, abstrakty, prohlaseni a podekovani je mozne definovat 
+  %bud pomoci nasledujicich parametru nebo pomoci vyhrazenych maker (viz dale)
+  %===========================================================================
+  %Klicova slova
+  %keywords.cs={Klíčová slova v českém jazyce.}, %klicova slova v ceskem ci slovenskem jazyce
+  %keywords.en={Klíčová slova v anglickém jazyce.}, %klicova slova v anglickem jazyce
+  %Abstract
+  %abstract.cs={Výtah (abstrakt) práce v českém jazyce.}, % abstrakt v ceskem ci slovenskem jazyce
+  %abstract.en={Výtah (abstrakt) práce v anglickém jazyce.}, % abstrakt v anglickem jazyce
+  %Prohlaseni
+  %declaration={Prohlašuji, že jsem tuto bakalářskou práci vypracoval samostatně pod vedením pana ...},
+  %Podekovani (nepovinne)
+  %acknowledgment={Zde je možné uvést poděkování vedoucímu práce a těm, kteří poskytli odbornou pomoc.} % nepovinne
+}
+
+%Abstrakt (cesky, slovensky ci anglicky)
+\abstract[cs]{Většinou výsledky testů aplikace jsou stejné a proto nenesou žádnou užitečnou informaci. Vývojáři musejí neustále probírat velké množství zbytečných informací, aby našli něco zajímavého. Tedy vývojář potřebuje nástroj pro analýzu testovacích výsledků a v případě nalezení zajimavé informace to oznámí uživateli. Tento nástroj ušetří spoustu času. Zadání této bakalářské práce je navrhnout a implementovat, mechanismus pro analýzu a oznámení uživateli o zajímavých změnách v výsledcích sady testů. Mechanismy musejí být snadno rozšiřitelné a dobře integrovatelné v ResultCloud. Součástí této práce je prostudování ResultCloud a na základě získaných znalostí rozšíření ResultCloud o analyzátor a oznamovatele. Nástroj je implementován pomocí AngularJS a PHP.}
+\abstract[en]{Software tests results have mostly the same values, therefore they do not contain any important or interesting information. Developers must spend a lot of time for looking for something interesting in tests results, thus developer require tool for analysis results and in case finding interesting information notify user about it. This tool can save a lot of time. Assignment of this bachelor work is design and implement mechanism for analyzing and notifing user about interesting changes in test results. Part of the work is to learn ResultCloud and based on acquired knowledge to extend ResultCloud.}
+%Klicova slova (cesky, slovensky ci anglicky)
+\keywords[cs]{ResultCloud, testování, analýza, oznámeni, notifikace, testovací sada, analyzátor}
+\keywords[en]{ResultCloud, testing, analysis, notification, notifier, test suite, analyzer}
+
+%Prohlaseni (u anglicky psane prace anglicky, u slovensky psane prace slovensky)
+\declaration{Hereby I declare that this bachelor's thesis was prepared as an original author's work under the supervision of Mgr. Bc. Hana Pluháčková and consultant Ing. Petr Müller. All the relevant information sources, which were used during preparation of this thesis, are properly cited and included in the list of references.}
+
+%Podekovani (nepovinne, nejlepe v jazyce prace)
+\acknowledgment{V této sekci je možno uvést poděkování vedoucímu práce a těm, kteří poskytli odbornou pomoc
+(externí zadavatel, konzultant, apod.).}
+
+\begin{document}
+  % Vysazeni titulnich stran
+  % ----------------------------------------------
+  \maketitle
+  % Obsah
+  % ----------------------------------------------
+  \tableofcontents
+  
+  % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
+\ifczech
+  \renewcommand\listfigurename{Seznam obrázků}
+\fi
+\ifslovak
+  \renewcommand\listfigurename{Zoznam obrázkov}
+\fi
+
+  % \listoffigures
+\ifczech
+  \renewcommand\listtablename{Seznam tabulek}
+\fi
+\ifslovak
+  \renewcommand\listtablename{Zoznam tabuliek}
+\fi
+
+  % \listoftables 
+
+  % Text prace
+  % ----------------------------------------------
+  \input{obsah} % viz. obsah.tex
+
+  % Pouzita literatura
+  % ----------------------------------------------
+\ifslovak
+  \makeatletter
+  \def\@openbib@code{\addcontentsline{toc}{chapter}{Literatúra}}
+  \makeatother
+  \bibliographystyle{czechiso}
+\else
+  \ifczech
+    \makeatletter
+    \def\@openbib@code{\addcontentsline{toc}{chapter}{Literatura}}
+    \makeatother
+    \bibliographystyle{czechiso}
+  \else 
+    \makeatletter
+    \def\@openbib@code{\addcontentsline{toc}{chapter}{Bibliography}}
+    \makeatother
+    \bibliographystyle{plain}
+  %  \bibliographystyle{alpha}
+  \fi
+\fi
+  \begin{flushleft}
+  % \nocite{*}
+  \bibliography{literatura} % viz. literatura.bib
+  \end{flushleft}
+
+  % Prilohy
+  % ---------------------------------------------
+  \appendix
+\ifczech
+  \renewcommand{\appendixpagename}{Přílohy}
+  \renewcommand{\appendixtocname}{Přílohy}
+  \renewcommand{\appendixname}{Příloha}
+\fi
+\ifslovak
+  \renewcommand{\appendixpagename}{Prílohy}
+  \renewcommand{\appendixtocname}{Prílohy}
+  \renewcommand{\appendixname}{Príloha}
+\fi
+  \appendixpage
+
+% \ifslovak
+%   \section*{Zoznam príloh}
+%   \addcontentsline{toc}{section}{Zoznam príloh}
+% \else
+%   \ifczech
+%     \section*{Seznam příloh}
+%     \addcontentsline{toc}{section}{Seznam příloh}
+%   \else
+%     \section*{List of Appendices}
+%     \addcontentsline{toc}{section}{List of Appendices}
+%   \fi
+% \fi
+  \startcontents[chapters]
+  \printcontents[chapters]{l}{0}{\setcounter{tocdepth}{2}}
+  \input{prilohy} % viz. prilohy.tex
+\end{document}

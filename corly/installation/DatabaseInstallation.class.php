@@ -364,6 +364,13 @@ class DatabaseInstallation
         $pUsername->NotNull();
         // Add Username to table
         $tUser->AddProperty($pUsername);
+
+        // Set email property
+        $pEmail = new DbProperty('Email');
+        $pEmail->SetType(DbType::Varchar(127));
+        $pEmail->NotNull();
+        // Add Email to table
+        $tUser->AddProperty($pEmail);
         
         // Set role property
         $pRole = new DbProperty('Role');

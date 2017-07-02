@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{systemtap}
+{\it SnapshotTesting - Systemtap Wiki}.
+\newblock [online], 2007.
+\newblock URL: \url{https://sourceware.org/systemtap/wiki/SnapshotTesting}.
+
+\bibitem{filip}
+Filip Matys.
+\newblock {\it Webový nástroj pro správu výsledků dlouhodobého
+  testování}.
+\newblock Master's thesis, FIT VUT v Brně, 2014.
+\newblock [Online; cit. 16.5.2016].
+
+\bibitem{angularJS}
+AngularJS team.
+\newblock {\it AngularJS Official Documentation}.
+\newblock [online], 2016.
+\newblock URL: \url{https://docs.angularjs.org/guide/introduction}.
+
+\bibitem{twitter}
+Twitter.
+\newblock {\it Twitter API documentation}.
+\newblock [online], 2016.
+\newblock URL: \url{https://dev.twitter.com/overview/documentation}.
+
+\bibitem{rss}
+Dave Winer.
+\newblock {\it RSS 2.0 Specification}.
+\newblock [online], 2003.
+\newblock URL: \url{http://cyber.law.harvard.edu/rss/rss.html}.
+
+\end{thebibliography}

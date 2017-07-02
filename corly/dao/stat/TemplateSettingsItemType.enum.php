@@ -12,6 +12,6 @@ class TemplateSettingsItemType
     const NUMBER = 1;
     const TEXT_AREA = 2;
     const DATE = 3;
-    const CHECKBOX = 4;
-    const RADIOBOX = 5;
+    const RADIOBOX = 4;
+    const CHECKBOX = 5;
 }

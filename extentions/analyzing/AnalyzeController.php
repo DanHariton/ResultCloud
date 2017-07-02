@@ -7,8 +7,10 @@ Library::using(Library::CORLY_SERVICE_FACTORY, ['FactoryService.class.php']);
 class AnalyzeController
 {
     static private $AnalyzerList = array();
+    static private $interesting_analyzers = array();
     static public function analyze(SubmissionTSE $submission, LINQ $submissionList, $plugin)
     {
+        self::$interesting_analyzers = array();
         $validation = new ValidationResult(array());
         foreach (self::$AnalyzerList as $value) {
             $analyzer = new $value();
@@ -17,6 +19,9 @@ class AnalyzeController
             if (!$validation->IsValid) {
                 return $validation;
             }
+            if ($analyzer->isInteresting()) {
+                self::$interesting_analyzers[] = $analyzer::ANALYZER_ID;
+            }
             foreach ($res->Data as $result) {
                 FactoryService::AnalyzerService()->SaveAnalyzerResults(array(new AnalyzerTSE($submission->GetId(), $analyzer::ANALYZER_ID, $result)));
             }
@@ -24,16 +29,32 @@ class AnalyzeController
         return $validation;
     }
 
+    static public function GetInterestingAnalyzers()
+    {
+        return self::$interesting_analyzers;
+    }
+
     static public function VisualizeByAnalyzer($analyzerId)
     {
         // var_dump(self::$AnalyzerList);
         if (self::$AnalyzerList[$analyzerId]) {
-            error_log("Workkkk");
             $a = self::$AnalyzerList[$analyzerId];
             $analyzer = new $a();
             return $analyzer->Visualize(FactoryService::AnalyzerService()->LoadResultsByAnalyzer($analyzerId));
         }
         return array();
+    }
+
+    static public function VisualizeBySubmission($submissionId)
+    {
+        $result = array();
+        foreach (self::$AnalyzerList as $analyzerId => $a) {
+        
+            $analyzer = new $a();
+            $analyzer_results = FactoryService::AnalyzerService()->LoadResultsByAnalyzer($analyzerId)->Where("Submission", LINQ::IS_EQUAL, $submissionId);
+            $result[$analyzerId] = $analyzer->VisualizeSingle($analyzer_results->Last());
+        }
+        return $result;
     }
 
     static public function InitAnalyzers()
@@ -43,6 +64,11 @@ class AnalyzeController
             $name = str_replace(dirname(__FILE__).DIRECTORY_SEPARATOR."analyzers".DIRECTORY_SEPARATOR, "", str_replace(".php", "", $value));
             self::$AnalyzerList[$name::ANALYZER_ID] = $name;
         }
+    }
+
+    static public function GetAnalyzersList()
+    {
+        return new LINQ(self::$AnalyzerList);
     }
 }
 

@@ -16,7 +16,7 @@ Running /home/afri/Projects/RedHat/Lab/binutils-gdb/ld/testsuite/ld-avr/avr.exp 
 Running /home/afri/Projects/RedHat/Lab/binutils-gdb/ld/testsuite/ld-bootstrap/bootstrap.exp ...
 PASS: bootstrap
 PASS: bootstrap with strip
-UNTESTED: bootstrap with --static
+PASS: bootstrap with --static
 PASS: bootstrap with --traditional-format
 PASS: bootstrap with --no-keep-memory
 PASS: bootstrap with --relax

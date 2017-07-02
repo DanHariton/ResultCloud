@@ -73,6 +73,13 @@ application.factory('TemplateSettingsService', function ($http) {
                 data: project
             })
         },
+        getByUser: function (user) {
+            return $http({
+                method: 'POST',
+                url: 'api/TemplateSettingsController.class.php?method=GET_BY_USER',
+                data: user
+            })
+        },
         save: function (templateSettings) {
             return $http({
                 method: 'POST',

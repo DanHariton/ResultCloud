@@ -1,0 +1,22 @@
+<p>Next results not UNTESTED anymore: </p>
+<div class="row" ng-repeat="(key, item) in data.Categories">
+    <h2>{{key}}</h2>
+    <div class="large-12 columns">
+        <div class="row" ng-repeat="(testCaseName, testCase) in item">
+            <div class="large-12 columns">
+                    <h3>
+                        {{testCaseName}}
+                    </h3>
+                    <table class="full-width double">
+                        <tbody>
+                            <tr ng-hide="ShowColumn[$index]" ng-repeat="(resultKey, result) in testCase">
+                                <td>{{resultKey}}</td>
+                                <td>{{result}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="divider" ng-if="!$last" />
+            </div>
+        </div>
+    </div>
+</div>

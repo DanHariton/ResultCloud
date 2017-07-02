@@ -11,5 +11,6 @@ class ViewType
     const SUBMISSION = 0;
     const DIFFERENCE = 1;
     const PROJECT = 2;
+    const ANALYZE = 3;
     const GENERAL = 9;
 }

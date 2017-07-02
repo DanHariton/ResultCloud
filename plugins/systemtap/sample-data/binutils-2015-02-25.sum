@@ -10,7 +10,7 @@ Running target unix
 Running /home/afri/Projects/RedHat/Lab/binutils-gdb/binutils/testsuite/binutils-all/aarch64/aarch64.exp ...
 Running /home/afri/Projects/RedHat/Lab/binutils-gdb/binutils/testsuite/binutils-all/ar.exp ...
 PASS: ar long file names
-PASS: ar thin archive
+UNTESTED: ar thin archive
 PASS: ar thin archive with nested archive
 PASS: ar symbol table
 PASS: ar argument parsing

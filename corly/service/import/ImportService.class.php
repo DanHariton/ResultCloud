@@ -78,28 +78,37 @@ class ImportService
 
         $project = new stdClass();
         $project->Id = $validation->Data->Project;
-        $tse_project = new ProjectTSE($project);
+        $tse_project = FactoryService::ProjectService()->LoadTSE($project);
         FactoryService::SubmissionService()->LoadSubmissions($tse_project, 5);
 
         $subList = new LINQ($tse_project->GetSubmissions());
         $subList->Pop();
         AnalyzeController::analyze($importValidation->Data, $subList, "systemtap");
-        $settingsService = new TemplateSettingsService();
-        $privateNotifiers = NotificationController::getPrivateNotifiers();
+        if (count(AnalyzeController::GetInterestingAnalyzers())) {
+            $settingsService = new TemplateSettingsService();
+            $privateNotifiers = NotificationController::getPrivateNotifiers();
 
-        $to = array();
-        if (SessionService::IsSessionSet('id')) {
+            $to = array();
+            $users = FactoryService::UserService()->GetList();
             foreach ($privateNotifiers as $value) {
-                $settings = $settingsService->GetByIdentifier($value, null, SessionService::GetSession('id'));
+                $to[$value] = array();
+            }
+            foreach ($users->ToList() as $user) {
+                $settings = $settingsService->GetByIdentifier($value, null, $user->Id);
+                error_log($settings->IsValid);
                 if ($settings->IsValid) {
                     if ($settings->Data['get-notify'] == "1") {
-                        $to[$value] = array("cyberbond95@gmail.com");
+                        foreach ($privateNotifiers as $value) {
+                            $to[$value][] = $user->Email;
+                        }
                     }
                 }
             }
+            $to["twitter"] = array();
+            $to["rss"] = "http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId();
+            $body = "Submission with id ".$importValidation->Data->GetId()." has interesting results according to [".implode(',', AnalyzeController::GetInterestingAnalyzers())."] analyzers, for more information go there "."http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId();
+            NotificationController::notify("Project ".$tse_project->GetName()." has new interesting submission", $body, "New interesting submission in ResultCloud, "."http://corly.local/#/project/".$project->Id."/analyze/".$importValidation->Data->GetId(), $to);
         }
-        NotificationController::notify("New Submission", "New submission in ResultCloud", "New submission in ResultCloud", $to);
-
 
         $project = new stdClass();
         $project->Id = $validation->Data->Project;
